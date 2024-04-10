@@ -1,1 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
+:root{
+    --box-shadow : 1px 1px 3px 1px #746f6f;
+    --myPrimary : #DC3545;
+}
+
+* , body {
+    font-family: "Poppins", sans-serif;
+}
