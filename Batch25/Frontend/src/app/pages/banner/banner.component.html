@@ -1,0 +1,82 @@
+<div class="container-fluid">
+    <div class="row my-3">
+      <div class="col-sm-8">
+        <div
+          id="carouselIndicators"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselIndicators"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselIndicators"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+          <div class="carousel-inner">
+            @for(image of images; track image){
+            <div class="carousel-item active">
+              <img
+                src={{image}}
+                class="d-block w-100 h-20"
+                style="border-radius: 10px"
+              />
+            </div>
+            }
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselIndicators"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselIndicators"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="row">
+          <div class="col-sm-12 mb-3">
+            <img
+              src="../../../assets/banner/b4.png"
+              class="d-block w-100 h-100"
+              style="border-radius: 10px"
+            />
+          </div>
+          <div class="col-sm-12">
+            <img
+              src="../../../assets/banner/b5.png"
+              class="d-block w-100 h-100"
+              style="border-radius: 10px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
