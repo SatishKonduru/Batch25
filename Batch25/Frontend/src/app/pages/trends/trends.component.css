@@ -1,0 +1,19 @@
+.line {
+    display: flex;
+    height: 2px;
+    width: 80px; /* You can adjust the width as needed */
+    background-color: var(--myPrimary); /* Line color */
+    margin: -14px auto;
+    margin-bottom: 10px;
+  }
+  ::ng-deep .mat-mdc-tab-header {
+    margin-bottom: 1rem;
+  }
+  
+  .zoom-card {
+    transition: transform 0.3s ease;
+  }
+  
+  .zoom-card:hover {
+    transform: scale(1.05);
+  }
