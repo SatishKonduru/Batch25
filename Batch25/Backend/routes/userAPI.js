@@ -4,6 +4,8 @@ const router = express.Router()
 const { User } = require('../models/userModel')
 const bcrypt = require('bcryptjs')
 const mongoose = require('mongoose')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 //Getting all Users
 router.get('/getUsers', async (req, res) => {
@@ -78,6 +80,38 @@ router.get('/getById/:id', async (req, res) => {
         userDetails: userDetails
     })
    }
+
+})
+
+
+//login 
+router.post('/login', async (req, res) => {
+    const user = req.body
+    const existingUser = await User.findOne({emial: user.email})
+    if(!existingUser){
+        return res.status(400).send({
+            message: "Invalid email id"
+        })
+    }
+    if(existingUser && bcrypt.compareSync(user.password, existingUser.password)){
+        const payload = {
+            email: existingUser.email,
+            role: existingUser.role,
+            name: existingUser.name
+        }
+        const accessToken = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: '1d'})
+        return res.status(200).send({
+            token: accessToken
+        })
+    }
+    else{
+        return res.status(400).send({
+            message: 'Wrong Password'
+        })
+    }
+
+
+
 
 })
 
