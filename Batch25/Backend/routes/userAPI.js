@@ -87,7 +87,7 @@ router.get('/getById/:id', async (req, res) => {
 //login 
 router.post('/login', async (req, res) => {
     const user = req.body
-    const existingUser = await User.findOne({emial: user.email})
+    const existingUser = await User.findOne({email: user.email})
     if(!existingUser){
         return res.status(400).send({
             message: "Invalid email id"
