@@ -1,9 +1,19 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { userModel } from '../shared/models/model';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  private _url = environment.apiUrl;
+  constructor(private _http: HttpClient) { }
+
+  userRegister(data: any){
+  return   this._http.post<userModel>(`${this._url}/user/register`, data, {
+      headers: new HttpHeaders().set('Content-Type','application/json')
+    })
+  }                           
 }
