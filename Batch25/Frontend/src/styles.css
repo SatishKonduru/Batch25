@@ -6,3 +6,25 @@
 * , body {
     font-family: "Poppins", sans-serif;
 }
+
+/* .error-snackbar{
+    background-color: #DC3545;
+    color: #fff;
+}
+.success-snackbar{
+    background-color: green;
+    color: white;
+} */
+
+.mat-mdc-snack-bar-container{
+    &.error-snackbar{
+        --mdc-snackbar-container-color: #ac0e0e !important;
+        --mdc-snackbar-supporting-text-color: #fff !important
+    }
+}
+.mat-mdc-snack-bar-container{
+    &.success-snackbar{
+        --mdc-snackbar-container-color: #218503!important;
+        --mdc-snackbar-supporting-text-color: #fff !important
+    }
+}

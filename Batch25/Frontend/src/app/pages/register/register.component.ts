@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { globalProperties } from '../../shared/globalProperties';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'register',
@@ -11,7 +12,7 @@ import { globalProperties } from '../../shared/globalProperties';
   imports: [AngularMaterialModule, FormsModule, ReactiveFormsModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
-  providers: [UserService]
+  providers: [UserService, SnackbarService]
 })
 export class RegisterComponent implements OnInit{
 
@@ -19,7 +20,8 @@ export class RegisterComponent implements OnInit{
  public responseMsg: any = ''
  constructor(private _userService: UserService,
             private _formBuilder: FormBuilder,
-            private _router: Router
+            private _router: Router,
+            private _snackbar: SnackbarService
  ){}
 
  ngOnInit(): void {
@@ -42,18 +44,21 @@ export class RegisterComponent implements OnInit{
  onRegister(){
   const data = this.registerForm.value
   this._userService.userRegister(data)
-  .subscribe((res: any) => {
-    this.responseMsg = res?.message
-    console.log(this.responseMsg)
-    this._router.navigate(['/login'])
-  }, (err: any) => {
-    if(err.error?.message){
-      this.responseMsg = err.error?.message
+  .subscribe({
+    next: (res: any) =>{
+      this.responseMsg = res.message
+      this._snackbar.openSnackbar(this.responseMsg, 'success')
+      this._router.navigate(['/'])
+    },
+    error: (err: any) => {
+      if(err.error?.message){
+        this.responseMsg = err.error?.message
+      }
+      else{
+        this.responseMsg = globalProperties.genericError
+      }
+      this._snackbar.openSnackbar(this.responseMsg, globalProperties.error)
     }
-    else{
-      this.responseMsg = globalProperties.genericError
-    }
-    console.log(this.responseMsg)
   })
  }
 

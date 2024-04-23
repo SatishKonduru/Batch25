@@ -1,1 +1,118 @@
-<p>register works!</p>
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-md-6 d-flex align-items-center justify-content-center bg-light">
+            <img src="../../../assets/banner/loginBanner.png" class="img-fluid w-100 h-100">
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <div class="card w-100 mt-2">
+                <div class="card-header bg-danger">
+                    <h6 class="card-title text-center text-white">Register</h6>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="registerForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                   <mat-form-field appearance="outline" style="width: 100%;">
+                                    <mat-label>Name:</mat-label>
+                                    <input matInput type="text" formControlName="name" >
+                                   @if(registerForm.controls.name.errors?.required){
+                                        <mat-error>
+                                            This Field is Mandatory
+                                        </mat-error>
+                                   }@else if (registerForm.controls.name.errors?.pattern) {
+                                    <mat-error>
+                                        Invalid Name
+                                    </mat-error>
+                                   }
+                                   </mat-form-field>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>Email:</mat-label>
+                                     <input matInput type="text" formControlName="email" >
+                                    @if(registerForm.controls.email.errors?.required){
+                                         <mat-error>
+                                             This Field is Mandatory
+                                         </mat-error>
+                                    }@else if (registerForm.controls.email.errors?.pattern) {
+                                     <mat-error>
+                                         Invalid Email
+                                     </mat-error>
+                                    }
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>password:</mat-label>
+                                     <input matInput type="password" formControlName="password" >
+                                    @if(registerForm.controls.password.errors?.required){
+                                         <mat-error>
+                                             This Field is Mandatory
+                                         </mat-error>
+                                    }
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>Phone:</mat-label>
+                                     <input matInput type="text" formControlName="phone" >
+                                    @if(registerForm.controls.phone.errors?.required){
+                                         <mat-error>
+                                             This Field is Mandatory
+                                         </mat-error>
+                                    }@else if (registerForm.controls.phone.errors?.pattern) {
+                                     <mat-error>
+                                         Invalid Phone number
+                                     </mat-error>
+                                    }
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>Apartment:</mat-label>
+                                     <input matInput type="password" formControlName="apartment" >
+                                    
+                                    </mat-form-field>
+                                 </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>Street:</mat-label>
+                                     <input matInput type="text" formControlName="street" >
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>City:</mat-label>
+                                     <input matInput type="text" formControlName="city" >
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>State:</mat-label>
+                                     <input matInput type="text" formControlName="state" >
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>Zip:</mat-label>
+                                     <input matInput type="text" formControlName="zip" >
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="form-group">
+                                    <mat-form-field appearance="outline" style="width: 100%;">
+                                     <mat-label>Country:</mat-label>
+                                     <input matInput type="text" formControlName="country" >
+                                    </mat-form-field>
+                                 </div>
+                            </div>
+                        </div>
+                       <button mat-stroked-button class="float-end mt-2" (click)="onRegister()">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
