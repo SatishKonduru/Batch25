@@ -15,5 +15,13 @@ export class UserService {
   return   this._http.post<userModel>(`${this._url}/user/register`, data, {
       headers: new HttpHeaders().set('Content-Type','application/json')
     })
-  }                           
+  }   
+
+  userLogin(data: any){
+  return   this._http.post<userModel>(`${this._url}/user/login`, data, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json')
+    })
+  }
+  
+
 }
