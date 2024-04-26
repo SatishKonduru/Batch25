@@ -22,8 +22,10 @@ export const routes: Routes = [
         path: 'register',
         component: RegisterComponent
     },
-
-
+    {
+        path: 'admin',
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+    },
 
 
     
