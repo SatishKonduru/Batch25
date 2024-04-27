@@ -1,0 +1,33 @@
+[
+    {
+        "route": "dashboard",
+        "name" : "Dashboard",
+        "icon" : "space_dashboard"
+    },
+    {
+        "name" : "Category",
+        "icon": "category",
+        "childern" : [
+            {
+                "route" : "men",
+                "name" : "Men",
+                "icon" : "sentiment_satisfied_alt"
+            },
+            {
+                "route" : "women",
+                "name" : "Women",
+                "icon" : "person"
+            },
+            {
+                "route" : "kids",
+                "name" : "Kids",
+                "icon" : "face"
+            }
+        ]
+    },
+    {
+        "route" : "orders",
+        "name" : "Orders",
+        "icon": "redeem"
+    }
+]

@@ -3,6 +3,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
     {
@@ -24,7 +25,8 @@ export const routes: Routes = [
     },
     {
         path: 'admin',
-        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+        canActivate: [adminGuard]
     },
 
 

@@ -1,1 +1,11 @@
-<p>dashboard works!</p>
+<mat-drawer-container class="admin-container" autosize>
+    <mat-drawer class="admin-sidenav" mode="side" #drawer opened>
+        <h4 class="d-flex justify-content-center align-items-center">{{user}}</h4>
+        <h6 class="d-flex justify-content-center align-items-center">Admin</h6>
+        
+    </mat-drawer>
+    <mat-drawer-content class="admin-sidenav-content">
+        <button mat-icon-button color="warn" (click)="drawer.toggle()"><mat-icon class="menuItem">menu</mat-icon></button>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+</mat-drawer-container>
