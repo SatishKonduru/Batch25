@@ -7,7 +7,7 @@
     {
         "name" : "Category",
         "icon": "category",
-        "childern" : [
+        "children" : [
             {
                 "route" : "men",
                 "name" : "Men",

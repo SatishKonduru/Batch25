@@ -2,10 +2,43 @@
     <mat-drawer class="admin-sidenav" mode="side" #drawer opened>
         <h4 class="d-flex justify-content-center align-items-center">{{user}}</h4>
         <h6 class="d-flex justify-content-center align-items-center">Admin</h6>
-        
+        <hr>
+        <mat-nav-list class="side-navbar">
+            @for(menu of menuList$ | async ; track menu ; let i = $index){
+                <ng-container [ngTemplateOutlet]="menu.children ? childMenu : parentMenu" [ngTemplateOutletContext]="{menu:menu}">
+
+                </ng-container>
+            }
+        </mat-nav-list>
     </mat-drawer>
     <mat-drawer-content class="admin-sidenav-content">
         <button mat-icon-button color="warn" (click)="drawer.toggle()"><mat-icon class="menuItem">menu</mat-icon></button>
         <router-outlet></router-outlet>
     </mat-drawer-content>
 </mat-drawer-container>
+
+<ng-template #parentMenu let-menu = 'menu'>
+    <mat-list-item [routerLink]="['../',menu.route]" style="cursor: pointer;">
+        <mat-icon matListItemIcon>{{menu.icon}}</mat-icon>
+        <span matListItemTitle>{{menu.name}}</span>
+    </mat-list-item>
+</ng-template>
+
+<ng-template #childMenu let-menu='menu'>
+    <mat-expansion-panel [class.mat-elevation-z0]="true">
+        <mat-expansion-panel-header>
+            <mat-icon matListItemIcon>{{menu.icon}}</mat-icon>
+            <span matListItemTitle style="margin-left: 2rem;">{{menu.name}}</span>
+        </mat-expansion-panel-header>
+        <mat-nav-list>
+         
+            @for(submenu of menu.children; track submenu){
+                <mat-list-item [routerLink]="['./products/',submenu.route]">
+                    <mat-icon matListItemIcon>{{submenu.icon}}</mat-icon>
+                    <span matListItemTitle>{{submenu.name}}</span>
+                </mat-list-item>
+            }
+        </mat-nav-list>
+    </mat-expansion-panel>
+</ng-template>
+

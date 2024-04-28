@@ -14,3 +14,10 @@
 .menuItem{
     color: red !important
 }
+
+::ng-deep .mat-expansion-panel-header{
+    padding: 0 16px !important
+}
+mat-icon{
+    color: #000 !important
+}
