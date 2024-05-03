@@ -4,9 +4,36 @@ const {Product} = require('../models/productModel')
 
 const {authenticateToken} = require('../AuthServices/authentication')
 const {checkRole} = require('../AuthServices/checkRole')
- const {Category} = require('../models/categoryModel')
- const mongoose = require('mongoose')
+const {Category} = require('../models/categoryModel')
+const mongoose = require('mongoose')
+const multer = require('multer')
 
+
+//Image File storage configuration
+const FILE_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpeg' : 'jpeg',
+    'image/jpg': 'jpg'
+}
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb ) {
+        const isValid = FILE_TYPE_MAP[file.mimetype]
+        let uploadError = new Error('Invlid Image Type')
+        if(isValid){
+            uploadError = null
+        }
+       cb(uploadError, 'public/uploads') 
+    },
+    filename: function (req, file, cb) {
+        const fileName = file.originalname.split(' ').join('-')
+        const extension = FILE_TYPE_MAP[file.mimetype]
+        cb(null, `${fileName}-${Date.now()}.${extension}`)
+
+    }
+})
+
+const uploadOptions = multer({storage: storage})
 
 //Getting all Products
 router.get('/getAllProducts', async (req, res) => {
@@ -25,9 +52,17 @@ router.get('/getAllProducts', async (req, res) => {
 })
 
 
-router.post('/addProduct', authenticateToken, checkRole, async (req, res) => {
+router.post('/addProduct', uploadOptions.single('image'), authenticateToken, checkRole, async (req, res) => {
     const data = req.body
     const categoryId = data.category
+
+    const file = req.file
+    if(!file){
+        return res.status(400).send({
+            message: 'No Image was found in request'}
+        )
+    }
+
     checkCategoryId = await Category.findById(categoryId)
 
     if(checkCategoryId == '' || checkCategoryId == null){
@@ -35,10 +70,13 @@ router.post('/addProduct', authenticateToken, checkRole, async (req, res) => {
             message: "Invalid Category"
         })
     }
-
+const fileName = req.file.filename
+const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+//    http://localhost:3000/public/uploads/brand-05052024.jpg
     const product = new Product({
         name: data.name,
         description: data.description,
+        image: `${basePath}${fileName}`,
         price: data.price,
         countInStock: data.countInStock,
         category: data.category

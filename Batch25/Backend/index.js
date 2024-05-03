@@ -15,5 +15,6 @@ app.use(express.json())
 app.use(`${api}/user`, userRoute)
 app.use(`${api}/product`, productRoute)
 app.use(`${api}/category`, categoryRoute)  
+app.use('/public/uploads', express.static(__dirname+'/public/uploads'))
  
 module.exports = app
