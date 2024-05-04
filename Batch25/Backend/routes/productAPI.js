@@ -118,7 +118,7 @@ router.get('/getById/:id', authenticateToken, async (req, res) => {
 
 
 //update product by id
-router.patch('/update/:id', authenticateToken, checkRole,  async (req, res) => {
+router.patch('/update/:id', uploadOptions.single('image'), authenticateToken, checkRole,  async (req, res) => {
     const productId = req.params.id
     const newData = req.body
     if(!mongoose.isValidObjectId(productId)){
@@ -127,7 +127,18 @@ router.patch('/update/:id', authenticateToken, checkRole,  async (req, res) => {
         })
     }
 
-    updateProduct = await Product.findByIdAndUpdate(productId, {name: newData.name}, {new: true})
+    const file = req.file
+    let imagePath;
+    if(file){
+        const fileName = req.file.filename
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+        imagePath = `${basePath}${fileName}`
+    }
+
+    updateProduct = await Product.findByIdAndUpdate(productId,{
+                                                                // name: newData.name
+                                                                image: imagePath
+                                                              }, {new: true})
     if(!updateProduct){
         return res.status(500).send({
             message: 'Invalid Product Selection'
@@ -215,6 +226,47 @@ router.get('/getCountByCategory/:id', authenticateToken, checkRole, async (req, 
             productCount: productCount
         })
     }
+})
+
+
+router.patch('/gallery-images/:id', uploadOptions.array('images', 10),  authenticateToken, checkRole, async (req, res) => {
+ const id = req.params.id
+ if(!mongoose.isValidObjectId(id)){
+    return res.status(400).send({
+        message: 'Invalid Object Id'
+    })
+ }
+const product = await Product.findById(id)
+
+if(!product){
+    return res.status(400).send({
+        message: 'Ivalid Product Selection'
+    })
+}
+
+let imagePaths = []
+const files = req.files
+const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+if(files){
+    files.map(file => {
+        imagePaths.push(`${basePath}${file.filename}`)
+})
+}
+
+
+updateProduct = await Product.findByIdAndUpdate(id, {images: imagePaths}, {new: true})
+if(!updateProduct){
+    return res.status(500).send({
+        message: 'updating gallary is failed'
+    })
+}
+else{
+    return res.status(200).send({
+        message: 'Product Updated successfully with Image Gallery',
+        updateProduct: updateProduct
+    })
+}
+
 })
 
 module.exports = router

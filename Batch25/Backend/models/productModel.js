@@ -11,7 +11,7 @@ const productSchema = new mongoose.Schema({
     season: {type: String, default: ''}, 
     brand: {type: String, default: ''},
     image: {type: String, default: ''},
-    images: {type: String, default: ''},
+    images: [{type: String, default: ''}],
     price: {type: Number, default: 0},
     category: {type: mongoose.Schema.Types.ObjectId, ref: 'Category'},
     countInStock : {type: Number, required: true, min: 0, max: 200},
