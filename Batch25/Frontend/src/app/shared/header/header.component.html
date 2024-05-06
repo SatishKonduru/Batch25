@@ -6,11 +6,14 @@
     </span>
     <span>About Us</span>
     <span>contact Us</span>
-    @if(!user){
+    <!-- @if(!user){
+        <span><button mat-stroked-button color="warn" [routerLink]="'/login'">Login</button></span>
+    } -->
+    @if( (userToken$ | async) == ''){
         <span><button mat-stroked-button color="warn" [routerLink]="'/login'">Login</button></span>
     }
     @else {
-        <span [matMenuTriggerFor]="userMenu" style="cursor: pointer;">{{user}}</span>
+        <span [matMenuTriggerFor]="userMenu" style="cursor: pointer;">{{userToken$ | async}}</span>
     }
     
 </div>

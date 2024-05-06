@@ -6,6 +6,7 @@ import { UserService } from '../../services/user.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { globalProperties } from '../../shared/globalProperties';
 import { jwtDecode } from 'jwt-decode';
+import { TokenAuthService } from '../../services/token-auth.service';
 
 @Component({
   selector: 'login',
@@ -13,7 +14,7 @@ import { jwtDecode } from 'jwt-decode';
   imports: [AngularMaterialModule, FormsModule, ReactiveFormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
-  providers: [UserService, SnackbarService]
+  providers: [UserService, SnackbarService, TokenAuthService]
 })
 export class LoginComponent implements OnInit{
 public loginForm: any = FormGroup
@@ -22,7 +23,8 @@ payload: any;
 constructor(private _formBuilder: FormBuilder,
   private _userService: UserService,
   private _snackbar: SnackbarService,
-  private _router: Router
+  private _router: Router,
+  private _tokenAuthService: TokenAuthService
 ){}
 
 ngOnInit(): void {
@@ -38,7 +40,8 @@ onLogin(){
   .subscribe({
     next: (res: any) => {
       const token = res?.token
-      sessionStorage.setItem('token', token)
+      // sessionStorage.setItem('token', token)
+      this._tokenAuthService.setToken(token)
       this.payload = jwtDecode(token)
       if(this.payload.role && this.payload.role === 'admin'){
         this._router.navigate(['/admin/dashboard'])
