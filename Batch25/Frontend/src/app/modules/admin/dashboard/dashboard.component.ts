@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TokenAuthService } from '../../../services/token-auth.service';
 
 interface IMenu {
   route: string,
@@ -23,16 +24,18 @@ interface IMenu {
 
 export class DashboardComponent implements OnInit{
 
-  payload : any = {}
-  user: string = ''
+  // payload : any = {}
+  // user: string = ''
+  userToken$ !: Observable<string>
   menuList$ !: Observable<IMenu>;
-  constructor(private _http: HttpClient){}
+  constructor(private _http: HttpClient, private _tokenAuth: TokenAuthService){}
   ngOnInit(): void {
-    const token = sessionStorage.getItem('token')
-    if(token){
-      this.payload = jwtDecode(token)
-      this.user = this.payload.name
-    }
+    // const token = sessionStorage.getItem('token')
+    // if(token){ 
+    //   this.payload = jwtDecode(token)
+    //   this.user = this.payload.name
+    // }
+    this.userToken$ = this._tokenAuth.getToken()
     this.menuList$ = this._http.get<IMenu>('../../../../assets/menuItems.json')
  
   }

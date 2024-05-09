@@ -1,6 +1,6 @@
 <mat-drawer-container class="admin-container" autosize>
     <mat-drawer class="admin-sidenav" mode="side" #drawer opened>
-        <h4 class="d-flex justify-content-center align-items-center">{{user}}</h4>
+        <h4 class="d-flex justify-content-center align-items-center">{{ userToken$ | async}}</h4>
         <h6 class="d-flex justify-content-center align-items-center">Admin</h6>
         <hr>
         <mat-nav-list class="side-navbar">
@@ -13,7 +13,9 @@
     </mat-drawer>
     <mat-drawer-content class="admin-sidenav-content">
         <button mat-icon-button color="warn" (click)="drawer.toggle()"><mat-icon class="menuItem">menu</mat-icon></button>
-        <router-outlet></router-outlet>
+        <div class="p-3 w-100">
+            <router-outlet></router-outlet>
+        </div>
     </mat-drawer-content>
 </mat-drawer-container>
 
