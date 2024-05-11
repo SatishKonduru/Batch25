@@ -46,9 +46,13 @@ router.get('/getAllProducts', async (req, res) => {
         })
     }
     else{
-        res.status(200).send({
-            product: productList
-        })
+        res.status(200).send(
+            {
+            products: productList
+             }
+    )
+
+        // res.status(200).send(productList)
     }
 })
 
