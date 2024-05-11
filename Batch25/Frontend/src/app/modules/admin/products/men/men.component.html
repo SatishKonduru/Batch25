@@ -17,7 +17,7 @@
     </button>
 </div>
 
-<product-card [products] = "menProducts$ | async | slice : paginate.pagIndex * paginate.pageSize : (paginate.pageIndex + 1) * paginate.pageSize "></product-card>
+<product-card [products] = "menProducts$ | async | slice : paginate.pageIndex * paginate.pageSize : (paginate.pageIndex + 1) * paginate.pageSize "></product-card>
 
 <mat-paginator #paginate 
                 [length]="(menProducts$ | async)?.length" 
