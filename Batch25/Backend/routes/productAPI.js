@@ -81,10 +81,16 @@ const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
     const product = new Product({
         name: data.name,
         description: data.description,
+        richDescription: data.richDescription,
         image: `${basePath}${fileName}`,
         price: data.price,
         countInStock: data.countInStock,
-        category: data.category
+        category: data.category,
+        style: data.style,
+        size: data.size,
+        color: data.color,
+        season: data.season,
+        brand: data.brand
     })
 
     newProduct = await product.save()

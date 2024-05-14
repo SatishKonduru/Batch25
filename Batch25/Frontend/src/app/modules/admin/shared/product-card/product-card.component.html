@@ -1,1 +1,35 @@
-<p>product-card works!</p>
+<div class="container-fluid row mt-4">
+@for(product of products; track product){
+    <div style="flex: 0 0 50%">
+        <mat-card class="mb-3 p-2">
+            <mat-grid-list cols="3" rowHeight="100px" style="flex-direction: column;" >
+                <mat-grid-tile>
+                    <div>
+                        Name: <span class="text-primary"> {{product.name}}</span>
+                    </div>
+                    <div>
+                        Price: <span class="text-danger">{{product.price}}</span>
+                    </div>
+                    <div>
+                        Brand: <span class="text-success">{{product.brand | uppercase}}</span>
+                    </div>
+                </mat-grid-tile>
+                <mat-grid-tile style="text-align: end;">
+                    <img src={{product.image}} class="w-50 h-100 image-with-shadow">
+                </mat-grid-tile>
+                <mat-grid-tile style="text-align: end;">
+                    <div class="mb-2 p-2">
+                        <button mat-mini-fab color="primary" matTooltip="Edit" style="width: 30px; height: 30px">
+                        <mat-icon>edit</mat-icon>
+                        </button>
+                    </div>
+                    <div class="p-2">
+                        <button mat-mini-fab color="warn" matTooltip="Delete" style="width: 30px; height: 30px">
+                        <mat-icon>delete</mat-icon></button>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card>
+    </div>
+}
+</div>

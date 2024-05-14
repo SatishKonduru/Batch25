@@ -1,0 +1,7 @@
+::ng-deep .mat-grid-tile-content{
+    display: block !important;
+}
+.image-with-shadow{
+    border-radius: 5px;
+    box-shadow: 0 2px 6px #000;
+}

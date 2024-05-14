@@ -2,12 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { AngularMaterialModule } from '../../../angular-material/angular-material.module';
 import { ProductCardComponent } from '../../shared/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularEditorModule } from '@kolkov/angular-editor';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AngularEditorConfig, AngularEditorModule } from '@kolkov/angular-editor';
 import { SnackbarService } from '../../../../services/snackbar.service';
 import { MenService } from '../../men/men.service';
 import { Observable, map } from 'rxjs';
 import { categoryModel, productModel } from '../../../../shared/models/model';
+import { globalProperties } from '../../../../shared/globalProperties';
 
 @Component({
   selector: 'men',
@@ -32,10 +33,35 @@ export class MenComponent implements OnInit{
   categories$: Observable<categoryModel[]>;
   responseMsg: string = ''
   snackbar = inject(SnackbarService)
+  productForm : any = FormGroup;
+  formBuilder = inject(FormBuilder)
 
+  editorConfig : AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    height: '12rem',
+    minHeight: '10rem',
+    placeholder: "Enter Product's Complete Description",
+    translate: 'no',
+    defaultParagraphSeparator: 'p',
+    defaultFontName: 'Poppins'
+  }
 ngOnInit(): void {
   this.getProducts()
   this.getCategories()
+  this.productForm = this.formBuilder.group({
+    name: ['', [Validators.required, Validators.pattern(globalProperties.nameRegx)]],
+    description: ['', [Validators.required]],
+    richDescription: [''],
+    price: [0, Validators.required],
+    category: ['', Validators.required],
+    countInStock: [0, Validators.required],
+    style: [''],
+    size: ['', Validators.required],
+    color: ['', Validators.required],
+    season: ['', Validators.required],
+    brand: ['', Validators.required]
+  })
 }
   getProducts(searchKey: string = ''){
     const products$ = this.menService.getProducts()
