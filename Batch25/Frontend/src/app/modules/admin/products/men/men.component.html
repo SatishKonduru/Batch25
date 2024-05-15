@@ -12,7 +12,7 @@
             </mat-form-field>
         </mat-card-content>
     </mat-card>
-    <button mat-mini-fab class="mx-4 my-4" color="warn" matTooltip="ADD New Product">
+    <button mat-mini-fab class="mx-4 my-4" color="warn" matTooltip="ADD New Product" (click)="drawer.toggle()">
         <mat-icon>add</mat-icon>
     </button>
 </div>
@@ -25,3 +25,231 @@
                 [pageSizeOptions]="[4,8,20,40]"
                 showFirstLastButtons
                 class="bg-light p-3"></mat-paginator>
+
+<!-- Right sidenav for Adding / Update product Details -->
+<mat-drawer #drawer class="add-product-sidenav" mode="over" position="end">
+    <div class="container animate__animated animate__bounceInDown">
+        <h5 class="mb-4">Add Product</h5>
+        <form [formGroup]="productForm">
+            <!-- First Row -->
+        <div class="row">
+            <div class="col-md-3 mb-1 mr-2">
+                <mat-form-field appearance="outline">
+                  <mat-label>Name: </mat-label>
+                  <input matInput formControlName="name" >
+                  @if(productForm.controls.name.touched && productForm.controls.name.invalid ){
+                    <mat-error>
+                      @if(productForm.controls.name.errors?.required){
+                        <span> Name is Mandatory</span>
+                      }
+                      @if(productForm.controls.name.errors?.pattern){
+                        <span> Invalid Name</span>
+                      }
+                    </mat-error>
+                  }
+                  
+                </mat-form-field>
+            </div>
+  
+            <div class="col-md-8 mb-1 mr-2">
+              <mat-form-field appearance="outline" style="width: 100%">
+                <mat-label>Description: </mat-label>
+                <textarea matInput formControlName="description" rows="1" > </textarea>
+                @if(productForm.controls.description.touched && productForm.controls.description.invalid ){
+                  <mat-error>
+                    @if(productForm.controls.description.errors?.required){
+                      <span> Description is Mandatory</span>
+                    }
+                    
+                  </mat-error>
+                }
+              </mat-form-field>
+            </div>
+  
+          </div>
+          <!-- End of First Row -->
+          <!-- Second Row -->
+          <div class="row">
+  
+            <div class="col-md-3 mb-1 mr-2">
+                <mat-form-field appearance="outline">
+                  <mat-label>Price: </mat-label>
+                  <input matInput formControlName="price" >
+                  @if(productForm.controls.price.touched && productForm.controls.price.invalid ){
+                    <mat-error>
+                      @if(productForm.controls.price.errors?.required){
+                        <span> Price is Mandatory</span>
+                      }
+                      
+                    </mat-error>
+                  }
+                </mat-form-field>
+            </div>
+          
+            <div class="col-md-3 mb-1 mr-2">
+             
+             <mat-form-field appearance="outline">
+                <mat-label>Category: </mat-label>
+               
+                  <mat-select formControlName="category"> 
+                   @for(category of (categories$ | async); track $index){
+                   <mat-option [value]="category.id">{{category.name}} </mat-option>
+                  }
+              </mat-select>
+              @if(productForm.controls.category.touched && productForm.controls.category.invalid ){
+                <mat-error>
+                  @if(productForm.controls.category.errors?.required){
+                    <span> Category is Mandatory</span>
+                  }
+                  
+                </mat-error>
+              }
+              </mat-form-field>
+            </div>
+  
+          <div class="col-md-3 mb-1 mr-2">
+           
+            <mat-form-field appearance="outline">
+              <mat-label>In Stock: </mat-label>
+              <input matInput formControlName="countInStock" >
+              @if(productForm.controls.countInStock.touched && productForm.controls.countInStock.invalid ){
+                <mat-error>
+                  @if(productForm.controls.countInStock.errors?.required){
+                    <span> Stock Value is Mandatory</span>
+                  }
+                  
+                </mat-error>
+              }
+            </mat-form-field>
+          </div>
+            <div class="col-md-3 mb-1 mr-2">
+              <mat-form-field appearance="outline">
+                <mat-label>Style: </mat-label>
+                <mat-select formControlName="style"> 
+                  <mat-option value="Casual">Casual</mat-option>
+                  <mat-option value="Formal">Formal</mat-option>
+                  <mat-option value="Sports">Sports</mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+        
+          </div>
+          <!-- End of Second Row -->
+          <!-- Third Row -->
+          <div class="row">
+            <div class="col-md-3 mb-1 mr-2">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label>Size: </mat-label>
+                  <mat-select formControlName="size"> 
+                    <mat-option value="Small">Small</mat-option>
+                    <mat-option value="Medium">Medium</mat-option>
+                    <mat-option value="Large">Large</mat-option>
+                    <mat-option value="Extra Large">Extra Large</mat-option>
+                  </mat-select>
+                  @if(productForm.controls.size.touched && productForm.controls.size.invalid ){
+                    <mat-error>
+                      @if(productForm.controls.size.errors?.required){
+                        <span> Size Value is Mandatory</span>
+                      }
+                      
+                    </mat-error>
+                  }
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mb-1 mr-2">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label>Color: </mat-label>
+                  <mat-select formControlName="color"> 
+                    <mat-option value="Black">Black</mat-option>
+                    <mat-option value="White">White</mat-option>
+                    <mat-option value="Red">Red</mat-option>
+                    <mat-option value="Green">Green</mat-option>
+                    <mat-option value="Blue">Blue</mat-option>
+                  </mat-select>
+                  @if(productForm.controls.color.touched && productForm.controls.color.invalid ){
+                    <mat-error>
+                      @if(productForm.controls.color.errors?.required){
+                        <span> Color is Mandatory</span>
+                      }
+                      
+                    </mat-error>
+                  }
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mb-1 mr-2">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label>Season: </mat-label>
+                  <mat-select formControlName="season"> 
+                    <mat-option value="Summer">Summer</mat-option>
+                    <mat-option value="Winter">Winter</mat-option>
+                    <mat-option value="Spring">Spring</mat-option>
+                   
+                  </mat-select>
+                  @if(productForm.controls.season.touched && productForm.controls.season.invalid ){
+                    <mat-error>
+                      @if(productForm.controls.season.errors?.required){
+                        <span> Season is Mandatory</span>
+                      }
+                      
+                    </mat-error>
+                  }
+                </mat-form-field>
+            </div>
+            <div class="col-md-3 mb-1 mr-2">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                  <mat-label>Brand: </mat-label>
+                  <mat-select formControlName="brand"> 
+                    <mat-option value="Louis Philippe">Louis Philippe</mat-option>
+                    <mat-option value="Allen Solly">Allen Solly</mat-option>
+                    <mat-option value="Puma">Puma</mat-option>
+                    <mat-option value="Reymonds">Reymonds</mat-option>
+                   
+                  </mat-select>
+                  @if(productForm.controls.brand.touched && productForm.controls.brand.invalid ){
+                    <mat-error>
+                      @if(productForm.controls.brand.errors?.required){
+                        <span>Brand is Mandatory</span>
+                      }
+                      
+                    </mat-error>
+                  }
+                </mat-form-field>
+            </div>
+          </div>
+          <!-- end of Third Row -->
+          <!-- Forth Row -->
+          <div class="row">
+            <div class="col-md-4 mb-1 mr-2">
+             
+                <div class="input-container">
+                  <div>Browse for Image to Upload <span style="color:red">*</span> </div>
+                  <input matInput placeholder="Choose file" [value]="selectedFileName" #fileInputField readonly style="display: none;">
+                  <input #fileInput type="file" id="image" name="image" (change)="onFileSelected($event)" style="display: none;">
+                  <button mat-mini-fab (click)="openFileInput()" tabindex="-1" color="primary">
+                    <mat-icon>attach_file</mat-icon>
+                  </button>
+                </div>
+              
+            </div>
+            
+            <div class="d-flex col-md-3 mb-1 mr-2" *ngIf="selectedImage">
+              <span style="color:green">Preview:</span>
+              <span><img [src]="selectedImage" alt="Selected Image" style="max-width: 100px; max-height: 100px;"></span>
+            </div>
+            
+         </div>
+          <!-- End of Forth Row -->
+          <!-- Fifth Row -->
+          <div class="row">
+            <div class="col-md-12 mb-1 mr-2">
+                <angular-editor formControlName="richDescription" [config]="editorConfig"></angular-editor>
+            </div>
+          </div>
+        </form>
+    </div>
+    <button mat-mini-fab class="mx-4 my-2 " color="warn" matTooltip="ADD New Product" (click)="saveProduct()" [disabled]="(!imageSelected) || !(productForm.valid && productForm.dirty)">
+    <mat-icon>save</mat-icon>
+    </button>
+    <button mat-mini-fab class="mx-4 my-2" color="warn" matTooltip="Close Form" (click)="closeDrawer()">
+    <mat-icon>close</mat-icon></button>
+</mat-drawer>

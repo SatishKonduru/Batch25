@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { AngularMaterialModule } from '../../../angular-material/angular-material.module';
 import { ProductCardComponent } from '../../shared/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { MenService } from '../../men/men.service';
 import { Observable, map } from 'rxjs';
 import { categoryModel, productModel } from '../../../../shared/models/model';
 import { globalProperties } from '../../../../shared/globalProperties';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'men',
@@ -26,7 +27,7 @@ import { globalProperties } from '../../../../shared/globalProperties';
   providers: [SnackbarService, MenService ]
 })
 export class MenComponent implements OnInit{
-
+@ViewChild('drawer') drawer : MatDrawer
   searchKey : string =''
   menProducts$ : Observable<productModel[]>;
   menService = inject(MenService)
@@ -46,6 +47,10 @@ export class MenComponent implements OnInit{
     defaultParagraphSeparator: 'p',
     defaultFontName: 'Poppins'
   }
+
+  selectedFileName: any
+  selectedImage: any
+  imageSelected: boolean = false;
 ngOnInit(): void {
   this.getProducts()
   this.getCategories()
@@ -95,5 +100,10 @@ ngOnInit(): void {
     this.searchKey = ''
     this.applyFilter('')
   }
+
+  openFileInput(){}
+  onFileSelected(e: any){}
+  saveProduct(){}
+  closeDrawer(){}
 
 }

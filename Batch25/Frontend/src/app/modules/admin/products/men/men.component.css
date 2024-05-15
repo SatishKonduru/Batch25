@@ -1,0 +1,7 @@
+.add-product-sidenav{
+    padding: 20px;
+    height: 105vh;
+    width: 95%;
+    margin: 0;
+    z-index: 9999;
+}
