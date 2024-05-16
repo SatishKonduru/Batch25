@@ -81,7 +81,7 @@ const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
     const product = new Product({
         name: data.name,
         description: data.description,
-        richDescription: data.richDescription,
+        richDescription: Array.isArray(data.richDescription) ? data.richDescription[0] : data.richDescription, 
         image: `${basePath}${fileName}`,
         price: data.price,
         countInStock: data.countInStock,

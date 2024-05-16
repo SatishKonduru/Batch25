@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { AngularMaterialModule } from '../../../angular-material/angular-material.module';
 import { ProductCardComponent } from '../../shared/product-card/product-card.component';
 import { CommonModule } from '@angular/common';
@@ -45,7 +45,7 @@ export class MenComponent implements OnInit{
     placeholder: "Enter Product's Complete Description",
     translate: 'no',
     defaultParagraphSeparator: 'p',
-    defaultFontName: 'Poppins'
+    defaultFontName: ''
   }
 
   selectedFileName: any
@@ -101,9 +101,75 @@ ngOnInit(): void {
     this.applyFilter('')
   }
 
-  openFileInput(){}
-  onFileSelected(e: any){}
-  saveProduct(){}
-  closeDrawer(){}
+  @ViewChild('fileInput') fileInput : ElementRef
+  @ViewChild ('fileInputField') fileInputField : ElementRef
+  image: any;
+
+  openFileInput(){
+    this.fileInput.nativeElement.click()
+  }
+  onFileSelected(e: any){
+    const fileInput = e.target
+    if(fileInput.files && fileInput.files.length > 0){
+      const file: File = fileInput.files[0]
+      this.image = file
+      this.previewImage(file)
+      this.fileInputField.nativeElement.value = file.name
+      this.imageSelected = true
+    }
+
+  }
+  saveProduct(){
+    const productDetails = this.productForm.value;
+    const imageFile = this.image;
+    const formData = new FormData();
+    formData.append("name", productDetails.name);
+    formData.append("description", productDetails.description);
+    formData.append("richDescription", productDetails.richDescription);
+    formData.append("price", productDetails.price);
+    formData.append("countInStock", productDetails.countInStock);
+    formData.append("category", productDetails.category);
+    formData.append("style", productDetails.style);
+    formData.append("size", productDetails.size);
+    formData.append("color", productDetails.color);
+    formData.append("season", productDetails.season);
+    formData.append("brand", productDetails.brand);
+    formData.append("image", imageFile);
+
+    this.menService.addProduct(formData).subscribe({
+      next: (res: any) => {
+        if(res?.message){
+            this.responseMsg = res?.message
+            this.getProducts()
+            this.snackbar.openSnackbar(this.responseMsg, 'success')
+        }
+      },
+      error: (err: any) => {
+        if(err.error?.message){
+          this.responseMsg = err.error?.message
+        }
+        else{
+          this.responseMsg = globalProperties.genericError
+        }
+        this.snackbar.openSnackbar(this.responseMsg, globalProperties.error)
+      }
+    })
+
+    this.productForm.reset()
+    this.selectedImage = ''
+    this.drawer.close()
+  }
+  closeDrawer(){
+    this.productForm.reset()
+    this.drawer.close()
+  }
+
+  previewImage(file: File){
+    const reader =  new FileReader()
+    reader.onload = (e) => {
+      this.selectedImage = e.target?.result as string
+    }
+    reader.readAsDataURL(file)
+  }
 
 }
