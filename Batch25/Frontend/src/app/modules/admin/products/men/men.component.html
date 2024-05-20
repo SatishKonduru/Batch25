@@ -16,6 +16,13 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
+<hr>
+<!-- <ng-container *ngIf="loaderService.loader$ | async">
+  <mat-spinner *ngIf = "loader" color="warn" [diameter]="spinnnerSize"></mat-spinner>
+</ng-container> -->
+@if(loaderService.loader$ | async){
+  <mat-spinner  color="warn" [diameter]="spinnnerSize"></mat-spinner>
+}
 
 <product-card [products] = "menProducts$ | async | slice : paginate.pageIndex * paginate.pageSize : (paginate.pageIndex + 1) * paginate.pageSize "></product-card>
 

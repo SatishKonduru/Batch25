@@ -49,10 +49,9 @@ router.get('/getAllProducts', async (req, res) => {
         res.status(200).send(
             {
             products: productList
-             }
-    )
+             })
+        
 
-        // res.status(200).send(productList)
     }
 })
 

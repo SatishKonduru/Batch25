@@ -10,6 +10,7 @@ import { Observable, map } from 'rxjs';
 import { categoryModel, productModel } from '../../../../shared/models/model';
 import { globalProperties } from '../../../../shared/globalProperties';
 import { MatDrawer } from '@angular/material/sidenav';
+import { LoaderService } from '../../../../services/loader.service';
 
 @Component({
   selector: 'men',
@@ -24,7 +25,7 @@ import { MatDrawer } from '@angular/material/sidenav';
   ],
   templateUrl: './men.component.html',
   styleUrl: './men.component.css',
-  providers: [SnackbarService, MenService ]
+  providers: [SnackbarService, MenService , LoaderService]
 })
 export class MenComponent implements OnInit{
 @ViewChild('drawer') drawer : MatDrawer
@@ -51,6 +52,12 @@ export class MenComponent implements OnInit{
   selectedFileName: any
   selectedImage: any
   imageSelected: boolean = false;
+  loaderService = inject(LoaderService)
+  spinnnerSize: number = 30
+
+
+
+
 ngOnInit(): void {
   this.getProducts()
   this.getCategories()
@@ -70,7 +77,8 @@ ngOnInit(): void {
 }
   getProducts(searchKey: string = ''){
     const products$ = this.menService.getProducts()
-    this.menProducts$ = products$.pipe(
+    const loadProducts$ = this.loaderService.showLoader(products$)
+    this.menProducts$ = loadProducts$.pipe(
       map((res: any) => {
         const productArray = res.products || []
         return productArray.filter((product: any) => product.category.name == 'Men' && 
