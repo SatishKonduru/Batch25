@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AngularMaterialModule } from '../../../angular-material/angular-material.module';
 import { CommonModule } from '@angular/common';
 
@@ -11,5 +11,18 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductCardComponent {
 @Input()  products : any
+@Input() menDrawer : any
+@Output() menDrawerContentTitle = new EventEmitter()
+@Output() menDrawerFormData = new EventEmitter()
+
+
+toggleMenDrawer(product: any){
+  this.menDrawer.toggleDrawer()
+  this.menDrawerContentTitle.emit('Update Product')
+  this.menDrawerFormData.emit(product)
+}
+
+
+
 
 }

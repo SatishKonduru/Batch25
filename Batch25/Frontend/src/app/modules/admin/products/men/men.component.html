@@ -24,7 +24,12 @@
   <mat-spinner  color="warn" [diameter]="spinnnerSize"></mat-spinner>
 }
 
-<product-card [products] = "menProducts$ | async | slice : paginate.pageIndex * paginate.pageSize : (paginate.pageIndex + 1) * paginate.pageSize "></product-card>
+<product-card [products] = "menProducts$ | async | slice : paginate.pageIndex * paginate.pageSize : (paginate.pageIndex + 1) * paginate.pageSize "
+[menDrawer]="this"
+(menDrawerContentTitle)="onMenDrawerContentTitleChange($event)"
+(menDrawerFormData)="onMenDrawerFormDataChange($event)"
+
+></product-card>
 
 <mat-paginator #paginate 
                 [length]="(menProducts$ | async)?.length" 
@@ -36,7 +41,13 @@
 <!-- Right sidenav for Adding / Update product Details -->
 <mat-drawer #drawer class="add-product-sidenav" mode="over" position="end">
     <div class="container animate__animated animate__bounceInDown">
+      @if(menDrawerContentTitle == ''){
         <h5 class="mb-4">Add Product</h5>
+      }  
+      @else {
+        <h5 class="mb-4">{{menDrawerContentTitle}}</h5>
+      }
+      
         <form [formGroup]="productForm">
             <!-- First Row -->
         <div class="row">
@@ -254,9 +265,19 @@
           </div>
         </form>
     </div>
-    <button mat-mini-fab class="mx-4 my-2 " color="warn" matTooltip="ADD New Product" (click)="saveProduct()" [disabled]="(!imageSelected) || !(productForm.valid && productForm.dirty)">
-    <mat-icon>save</mat-icon>
-    </button>
+
+    @if(menDrawerContentTitle == ''){
+      <button mat-mini-fab class="mx-4 my-2 " color="warn" matTooltip="ADD New Product" (click)="saveProduct()" [disabled]="(!imageSelected) || !(productForm.valid && productForm.dirty)">
+        <mat-icon>save</mat-icon>
+        </button>
+    }
+    @else {
+      <button mat-mini-fab class="mx-4 my-2 " color="warn" matTooltip="UPDATE Product" (click)="editProduct()" [disabled]="(!imageSelected)">
+        <mat-icon>save</mat-icon>
+        </button>
+    }
+   
+
     <button mat-mini-fab class="mx-4 my-2" color="warn" matTooltip="Close Form" (click)="closeDrawer()">
     <mat-icon>close</mat-icon></button>
 </mat-drawer>

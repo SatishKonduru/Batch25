@@ -54,7 +54,8 @@ export class MenComponent implements OnInit{
   imageSelected: boolean = false;
   loaderService = inject(LoaderService)
   spinnnerSize: number = 30
-
+  menDrawerContentTitle = ''
+  menDrawerFormData : any = {}
 
 
 
@@ -168,6 +169,8 @@ ngOnInit(): void {
     this.drawer.close()
   }
   closeDrawer(){
+    this.menDrawerContentTitle =''
+    this.selectedImage=''
     this.productForm.reset()
     this.drawer.close()
   }
@@ -179,5 +182,21 @@ ngOnInit(): void {
     }
     reader.readAsDataURL(file)
   }
+
+  toggleDrawer(){
+    this.drawer.toggle()
+  }
+
+  onMenDrawerContentTitleChange(title: string){
+    this.menDrawerContentTitle = title
+  }
+  onMenDrawerFormDataChange(data: any){
+    this.menDrawerFormData = data
+    this.productForm.patchValue(this.menDrawerFormData)
+    this.productForm.controls['category'].setValue(this.menDrawerFormData.category.id)
+    this.selectedImage = this.menDrawerFormData.image
+  }
+
+  editProduct(){}
 
 }
