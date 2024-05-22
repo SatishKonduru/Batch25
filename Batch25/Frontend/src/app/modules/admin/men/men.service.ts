@@ -27,5 +27,16 @@ export class MenService {
     return this._http.post(`${this._url}/product/addProduct`, data)
   }
 
+  updateProduct(pId: any, data: any){
+    return this._http.patch(`${this._url}/product/update/${pId}`, data)
+  }
+
+  deleteProduct(pId: any){
+    return this._http.delete(`${this._url}/product/delete/${pId}`)
+  }
+
+
+
+
 
 }

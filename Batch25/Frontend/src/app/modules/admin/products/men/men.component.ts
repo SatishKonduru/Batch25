@@ -197,6 +197,42 @@ ngOnInit(): void {
     this.selectedImage = this.menDrawerFormData.image
   }
 
-  editProduct(){}
-
+  editProduct(){
+    const productDetails = this.productForm.value
+    const imageFile = this.image
+    const formData = new FormData()
+    formData.append('name', productDetails.name)
+    formData.append('description', productDetails.description)
+    formData.append('richDescription', productDetails.richDescription)
+    formData.append('price', productDetails.price)
+    formData.append('countInStock', productDetails.countInStock)
+    formData.append('category', productDetails.category)
+    formData.append('style', productDetails.style)
+    formData.append('size', productDetails.size)
+    formData.append('color', productDetails.color)
+    formData.append('season', productDetails.season)
+    formData.append('brand', productDetails.brand)
+    formData.append('image', imageFile)
+    const productId = this.menDrawerFormData.id
+    this.menService.updateProduct(productId, formData).subscribe({
+      next: (res: any) => {
+        if(res?.message){
+          this.responseMsg = res?.message
+          this.getProducts()
+          this.snackbar.openSnackbar(this.responseMsg, 'success')
+        }
+      },
+      error: (err: any) => {
+        if(err.error?.message){
+          this.responseMsg = err.error?.message
+        }
+        else{
+          this.responseMsg = globalProperties.genericError
+        }
+        this.snackbar.openSnackbar(this.responseMsg, globalProperties.error)
+      }
+    })
+    this.drawer.close()
+  }
+  
 }

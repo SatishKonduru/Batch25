@@ -145,7 +145,17 @@ router.patch('/update/:id', uploadOptions.single('image'), authenticateToken, ch
     }
 
     updateProduct = await Product.findByIdAndUpdate(productId,{
-                                                                // name: newData.name
+                                                                name: newData.name,
+                                                                description: newData.description,
+                                                                richDescription: newData.richDescription,
+                                                                price: newData.price,
+                                                                category: newData.category,
+                                                                countInStock: newData.countInStock,
+                                                                style: newData.style,
+                                                                size: newData.size,
+                                                                color: newData.color,
+                                                                season: newData.season,
+                                                                brand: newData.brand,
                                                                 image: imagePath
                                                               }, {new: true})
     if(!updateProduct){
