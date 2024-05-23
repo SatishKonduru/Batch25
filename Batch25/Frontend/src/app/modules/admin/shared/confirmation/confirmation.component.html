@@ -1,1 +1,7 @@
-<p>confirmation works!</p>
+<mat-dialog-content>
+    <h5>Are you sure for <span style="color: var(--myPrimary)">{{" "+details.message+" "}}</span> ? </h5>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+    <button mat-raised-button color="warn" (click)="handleAction()">YES</button>
+    <button mat-raised-button mat-dialog-close>No</button>
+</mat-dialog-actions>

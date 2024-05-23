@@ -84,7 +84,7 @@ ngOnInit(): void {
         const productArray = res.products || []
         return productArray.filter((product: any) => product.category.name == 'Men' && 
       (product.name.trim().toLowerCase().includes(searchKey.trim().toLowerCase()) || 
-      product.brand.trim().toLoserCase().includes(searchKey.trim().toLowerCase())))
+      product.brand.trim().toLowerCase().includes(searchKey.trim().toLowerCase())))
       })
     )
 
@@ -235,4 +235,7 @@ ngOnInit(): void {
     this.drawer.close()
   }
   
+  onDeleteProductFormProductCard(){
+    this.getProducts('')
+  }
 }

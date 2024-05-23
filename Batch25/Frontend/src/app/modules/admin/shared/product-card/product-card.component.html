@@ -8,7 +8,7 @@
                         Name: <span class="text-primary"> {{product.name}}</span>
                     </div>
                     <div>
-                        Price: <span class="text-danger">{{product.price}}</span>
+                        Price: <span class="text-danger"> &#8377;. {{product.price}} /-</span>
                     </div>
                     <div>
                         Brand: <span class="text-success">{{product.brand | uppercase}}</span>
@@ -24,7 +24,7 @@
                         </button>
                     </div>
                     <div class="p-2">
-                        <button mat-mini-fab color="warn" matTooltip="Delete" style="width: 30px; height: 30px">
+                        <button mat-mini-fab color="warn" matTooltip="Delete" style="width: 30px; height: 30px"  (click)="deleteProduct(product)">
                         <mat-icon>delete</mat-icon></button>
                     </div>
                 </mat-grid-tile>
