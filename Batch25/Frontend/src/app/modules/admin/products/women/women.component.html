@@ -1,1 +1,20 @@
-<p>women works!</p>
+<div class="container">
+    <div class="first-div" [ngStyle]="{'flex-basis': showDetails ? '70%': '100%'}">
+        <div class="d-flex">
+            <mat-card class="w-25 fs-4 text-center" style="height:90px">
+                <mat-card-content>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Search</mat-label>
+                        <input matInput [(ngModel)]="searchKey"  #search (keyup)="applyFilter(search.value)">
+                        @if(searchKey){
+                            <button matSuffix mat-icon-button (click)="onSearchClear()">
+                            <mat-icon>close</mat-icon>
+                            </button>
+                        }
+                    </mat-form-field>
+                   
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
