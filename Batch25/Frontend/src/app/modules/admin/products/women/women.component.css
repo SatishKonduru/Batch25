@@ -1,0 +1,23 @@
+.container{
+    display: flex;
+}
+.first-div{
+    flex-grow: 1;
+}
+.second-div{
+    height: 100vh;
+    flex-basis: 40%;
+    border-left: 5px solid var(--myPrimary);
+    border-radius: 15px;
+    padding: 20px;
+    margin-left: 10px;
+}
+.selected{
+    background-color: lightgray;
+}
+th{
+    color: var(--myPrimary)
+}
+tr:hover{
+    cursor: pointer;
+}
