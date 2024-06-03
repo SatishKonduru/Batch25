@@ -20,6 +20,9 @@
             <mat-divider></mat-divider>
             <span class="text-success">Click on Product to see Preview</span>
         </div>
+        @if(loaderService.loader$ | async){
+            <mat-spinner color="warn" [diameter]="spinnerSize"></mat-spinner>
+        }
         <ng-container *ngIf="(womenProducts$ | async) | slice
                                 : paginate.pageIndex * paginate.pageSize
                                 : (paginate.pageIndex + 1) * paginate.pageSize as dataSource">
