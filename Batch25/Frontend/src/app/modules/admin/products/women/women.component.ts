@@ -7,6 +7,7 @@ import { SnackbarService } from '../../../../services/snackbar.service';
 import { productModel } from '../../../../shared/models/model';
 import { Observable, Subject, debounceTime, distinctUntilChanged, map, shareReplay, startWith, switchMap } from 'rxjs';
 import { LoaderService } from '../../../../services/loader.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'women',
@@ -28,7 +29,7 @@ snackbar = inject(SnackbarService)
 loaderService = inject (LoaderService)
 spinnerSize: number = 20
 private searchTerms = new Subject<string>()
-
+router = inject(Router)
 
 
 ngOnInit(): void {
@@ -79,6 +80,11 @@ getProducts(searchKey : string = ''): Observable<any>{
   )
 }
 
+onUpdate(item: any){
+// console.log("Selected Women PRoduct Data: ", item)
+this.womenService.setFormData(item)
+this.router.navigate(['admin/dashboard/products/men'], {queryParams: {openDrawer: true}})
+}
 
 
 }

@@ -39,7 +39,7 @@
                 class="bg-light p-3"></mat-paginator>
 
 <!-- Right sidenav for Adding / Update product Details -->
-<mat-drawer #drawer class="add-product-sidenav" mode="over" position="end">
+<mat-drawer #drawer class="add-product-sidenav" mode="over" position="end" [opened]="isDrawerOpen">
     <div class="container animate__animated animate__bounceInDown">
       @if(menDrawerContentTitle == ''){
         <h5 class="mb-4">Add Product</h5>

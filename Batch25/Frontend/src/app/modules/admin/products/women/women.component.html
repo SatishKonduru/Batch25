@@ -62,7 +62,11 @@
     </div>
     @if(selectedItem){
         <div class="second-div">
-            <button mat-mini-fab color="warn" class="float-end" (click)="onClose()"> <mat-icon>close</mat-icon> </button>
+            <div class="d-flex justify-content-between">
+                <button mat-mini-fab color="primary" matTooltip="Update" (click)="onUpdate(selectedItem)"><mat-icon>update</mat-icon></button>
+                <button mat-mini-fab color="warn" class="float-end" (click)="onClose()"> <mat-icon>close</mat-icon> </button>
+            </div>
+            
             <h2>{{selectedItem.name}}</h2>
             <p>
                 <img src="{{selectedItem.image}}" class="w-100 h-50 rounded-3" style="box-shadow: var(--box-shadow);"> 

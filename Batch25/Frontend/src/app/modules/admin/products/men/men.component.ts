@@ -11,6 +11,8 @@ import { categoryModel, productModel } from '../../../../shared/models/model';
 import { globalProperties } from '../../../../shared/globalProperties';
 import { MatDrawer } from '@angular/material/sidenav';
 import { LoaderService } from '../../../../services/loader.service';
+import { ActivatedRoute } from '@angular/router';
+import { WomenService } from '../women/women.service';
 
 @Component({
   selector: 'men',
@@ -57,6 +59,14 @@ export class MenComponent implements OnInit{
   menDrawerContentTitle = ''
   menDrawerFormData : any = {}
 
+  isDrawerOpen : boolean = false
+  activatedRoute = inject(ActivatedRoute)
+  womenProductData: any
+  constructor(private _womenService : WomenService){
+    this._womenService.isOpen$.subscribe(isOpen => {
+      this.isDrawerOpen = isOpen
+    })
+  }
 
 
 ngOnInit(): void {
@@ -75,7 +85,19 @@ ngOnInit(): void {
     season: ['', Validators.required],
     brand: ['', Validators.required]
   })
+
+  this.activatedRoute.queryParams.subscribe(params => {
+   if(params['openDrawer']){
+    this._womenService.openDrawer()
+    this._womenService.formData$.subscribe(res => {
+      this.menDrawerContentTitle = 'Update Product'
+      this.womenProductData = res
+    })
+    this.onMenDrawerFormDataChange(this.womenProductData)
+   }
+  })
 }
+
   getProducts(searchKey: string = ''){
     const products$ = this.menService.getProducts()
     const loadProducts$ = this.loaderService.showLoader(products$)
