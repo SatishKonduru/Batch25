@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { AngularMaterialModule } from '../../../angular-material/angular-material.module';
 import { CommonModule } from '@angular/common';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MenService } from '../../men/men.service';
+import { MenService } from '../../products/men/men.service';
 import { MAT_MENU_SCROLL_STRATEGY } from '@angular/material/menu';
 import { SnackbarService } from '../../../../services/snackbar.service';
 import { ConfirmationComponent } from '../confirmation/confirmation.component';
