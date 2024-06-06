@@ -118,8 +118,7 @@ export class MenComponent implements OnInit {
       if (params['openDrawer']) {
         this._womenService.openDrawer();
        this._womenService.formData$.subscribe(res => {
-        console.log("RESSSSSSSSS in MMMEn:", res)
-        this.menDrawerContentTitle = "Update Product"
+       this.menDrawerContentTitle = "Update Product"
         this.womenProductData = res;
       console.log("this.womenProductData................", this.womenProductData)
       })
@@ -174,13 +173,12 @@ export class MenComponent implements OnInit {
     this.menDrawerContentTitle = "";
     this.selectedImage = "";
     this.productForm.reset();
-    this.activatedRoute.queryParams.subscribe(params => {
-      if(params['openDrawer']){
-        this._womenService.closeDrawer()
-       this.router.navigate(['admin/dashboard/products/women'])
-      }
-    
-    })
+   this.activatedRoute.queryParams.subscribe(params => {
+    if(params['openDrawer']){
+      this._womenService.closeDrawer()
+      this.router.navigate(['admin/dashboard/products/women'])
+    }
+   })
     
     this.drawer.close();
   }
@@ -311,7 +309,12 @@ export class MenComponent implements OnInit {
           this.snackbar.openSnackbar(this.responseMsg, globalProperties.error);
         }
     });
-  
+    this.activatedRoute.queryParams.subscribe(params => {
+      if(params['openDrawer']){
+        this,this._womenService.closeDrawer()
+        this.router.navigate(['admin/dashboard/products/women'])
+      }
+    })
     this.drawer.close();
   }
 

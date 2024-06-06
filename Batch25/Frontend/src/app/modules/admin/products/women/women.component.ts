@@ -98,5 +98,40 @@ export class WomenComponent implements OnInit{
     this.router.navigate(['admin/dashboard/products/men'], { queryParams: { openDrawer: true } });
   }
  
-   
+  deleteProduct(product: any){
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.data = {
+      message: 'Delete: ' + product.name
+    }
+   const dialogRef = this.dialog.open(ConfirmationComponent, dialogConfig)
+    dialogRef.componentInstance.afterDelete.subscribe({
+      next: (res: any) => {
+        this.delete(product.id)
+        dialogRef.close()
+        this.onClose()
+      }
+    })
+
+  }
+   delete(id: any){
+    this.womenService.deleteProduct(id).subscribe({
+      next: (res: any) => {
+        this.getProducts('')
+        
+        if(res?.message) {
+          this.responseMsg = res?.message
+        }
+        this.snackbar.openSnackbar(this.responseMsg, 'success')
+      },
+      error: (err: any) => {
+        if(err.error?.message) {
+          this.responseMsg = err.error?.message
+        }
+        else{
+          this.responseMsg = globalProperties.genericError
+        }
+        this.snackbar.openSnackbar(this.responseMsg, globalProperties.error)
+      }
+    })
+   }
 }
