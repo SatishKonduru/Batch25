@@ -34,6 +34,7 @@ import { SnackbarService } from "../../../../services/snackbar.service";
 import { LoaderService } from "../../../../services/loader.service";
 import { WomenService } from "../women/womenService";
 import { MenService } from "./men.service";
+import { KidsService } from "../kids/kids.service";
 
 
 @Component({
@@ -78,7 +79,7 @@ export class MenComponent implements OnInit {
 
   menDrawerContentTitle: any = "";
   menDrawerFormData: any = {};
-
+  kidaProductsData: any
 
   isDrawerOpen: boolean = false;
   activatedRoute = inject(ActivatedRoute)
@@ -86,10 +87,14 @@ export class MenComponent implements OnInit {
   womenProductData: any
 
   router = inject(Router)
-  constructor(private _womenService: WomenService ) {
+  constructor(private _womenService: WomenService, private _kidsService: KidsService ) {
     this._womenService.isOpen$.subscribe(isOpen => {
       this.isDrawerOpen = isOpen;
     });
+
+    this._kidsService.isOpen$.subscribe(isOpen => {
+      this.isDrawerOpen = isOpen
+    })
    
   }
   ngOnInit(): void {
@@ -123,10 +128,24 @@ export class MenComponent implements OnInit {
       console.log("this.womenProductData................", this.womenProductData)
       })
       this.onMenDrawerFormDataChange(this.womenProductData)
-     
-      }
-  
+     }
+
+     if(params['openDrawerForKids']){
+      this._kidsService.openDrawer()
+      this._kidsService.formData$.subscribe(res => {
+        this.menDrawerContentTitle = 'Update Product'
+        this.kidaProductsData = res
+      })
+      this.onMenDrawerFormDataChange(this.kidaProductsData)
+     }
     })
+
+   
+
+
+
+
+
   }
   saveProduct() {
     const productDetails = this.productForm.value;
@@ -177,6 +196,11 @@ export class MenComponent implements OnInit {
     if(params['openDrawer']){
       this._womenService.closeDrawer()
       this.router.navigate(['admin/dashboard/products/women'])
+    }
+
+    if(params['openDrawerForKids']){
+      this._kidsService.closeDrawer()
+      this.router.navigate(['admin//dashboard/products/kids'])
     }
    })
     
@@ -315,6 +339,13 @@ export class MenComponent implements OnInit {
         this.router.navigate(['admin/dashboard/products/women'])
       }
     })
+    this.activatedRoute.queryParams.subscribe(params => {
+      if(params['openDrawerForKids']){
+        this,this._womenService.closeDrawer()
+        this.router.navigate(['admin/dashboard/products/kids'])
+      }
+    })
+
     this.drawer.close();
   }
 
