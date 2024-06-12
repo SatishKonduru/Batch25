@@ -198,19 +198,19 @@ router.delete('/delete/:id',authenticateToken, checkRole, async (req, res)=>{
 
 
 //Getting product Count
-router.get('/getCount',authenticateToken, checkRole,  async (req, res) => {
-    productCount = await Product.countDocuments()
-    if(!productCount){
-        return res.status(500).send({
-            message: 'No Products were found'
-        })
-    }
-    else{
-        return res.status(200).send({
-            count: productCount
-        })
-    }
-})
+// router.get('/getCount',authenticateToken, checkRole,  async (req, res) => {
+//     productCount = await Product.countDocuments()
+//     if(!productCount){
+//         return res.status(500).send({
+//             message: 'No Products were found'
+//         })
+//     }
+//     else{
+//         return res.status(200).send({
+//             count: productCount
+//         })
+//     }
+// })
 
 
 //Get Products by Category
@@ -285,6 +285,32 @@ else{
         updateProduct: updateProduct
     })
 }
+
+})
+
+
+//Count of products
+router.get('/getCount',authenticateToken, checkRole , async (req, res) => {
+    // productCount = await Product.countDocuments() // it retuns number of objects(Documents)
+    productCount = await Product.aggregate([{
+        $group: {
+            _id: null,
+            countInStock: { $sum: '$countInStock'}
+        }
+    }])
+     console.log('Aggregation result:', productCount);
+    if(!productCount){
+        return res.status(500).send({
+            message: "No Products were found"
+        })
+    }
+    else{
+        return res.status(200).send({
+            // countInStock: productCount[0]
+             count: productCount.pop().countInStock
+       
+        })
+    }
 
 })
 

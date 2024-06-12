@@ -4,6 +4,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MenComponent } from './products/men/men.component';
 import { WomenComponent } from './products/women/women.component';
 import { KidsComponent } from './products/kids/kids.component';
+import { AdminComponent } from './admin.component';
 
 const routes: Routes = [
   {
@@ -13,8 +14,12 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    component: AdminComponent,
     children: [
+      {
+        path: '',
+        component: DashboardComponent
+      },
       {
         path: 'products/men',
         component: MenComponent
