@@ -1,1 +1,28 @@
-<h1>Welcome to Dashboard...</h1>
+<div class="container-fluid">
+    <div class="row d-flex justify-content-between mt-5">
+        <div class="col-md-3 rounded-4" style="width: 200px; height: 300px" >
+            <span style="position: absolute; 
+                        transform: translate(25px, 30px);
+                    font-size: 15px;
+                    font-weight: bold;
+                    color: whitesmoke">Total Products
+            </span>
+            <span style="position: absolute; 
+            transform: translate(40px, 140px);
+        font-size: 50px;
+        font-weight: bold;
+        color: whitesmoke">
+                    {{count$ | async}}
+            </span>
+            <img src="../../../../assets/brand/CountBackImage.png" class="w-100 h-100 rounded-4" style="box-shadow: var( --box-shadow)" >
+        </div>
+        <div class="col-md-4 rounded-4">
+            <div #PieContainer style="width:500px; height: 300px ;margin-left: -100px;"></div>
+        </div>
+        <div class="col-md-5 rounded-4">
+            <div #LineContainer style="width:500px; height: 350px ;margin-left: -30px;">
+
+            </div>
+        </div>
+    </div>
+</div>
