@@ -39,9 +39,10 @@ export class DashboardComponent implements OnInit{
   this.dashboardService.getProducts().subscribe((data: any) => {
     if(data.products){
       this.products = data.products
+      console.log("PPPPPPPPPPPPPPP", this.products)
       this.countCategories()
       this.renderPieChart()
-      // this.renderLineChart()
+      this.renderLineChart()
 
     }
   })
@@ -79,8 +80,11 @@ export class DashboardComponent implements OnInit{
         radius: '85%',
         data: [
           {value: this.menCount, name: 'Men'},
+          {value: 5, name:'', lable: {show: false}},
           {value: this.womenCount, name: 'Women'},
-          {value: this.kidsCount, name: 'Kids'}
+          {value: 5, name:'', lable: {show: false}},
+          {value: this.kidsCount, name: 'Kids'},
+          {value: 5, name:'', lable: {show: false}},
         ],
         emphasis: {
           itemStyle : {
@@ -97,5 +101,57 @@ export class DashboardComponent implements OnInit{
     myChart.on('error', function(error){console.error('ECharts error: ', error)})
   }
 
-  renderLineChart(){}
+  renderLineChart(){
+    const echartsElement: HTMLElement = this.LineContainer.nativeElement
+
+    if(!echartsElement){
+      console.error('Echart container is not available')
+      return
+    }
+
+    const myChart = echarts.init(echartsElement)
+    const option = {
+      tooltip: {
+        trigger: 'axis'
+      },
+      xAxis : {
+        type: 'category',
+        data: ['Men','Women','Kids']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [
+            {
+              value: this.menCount,
+              itemStyle: {
+                color: '#ff6666'
+              }
+            },
+            {
+              value: this.womenCount,
+              itemStyle: {
+                color: '#009933'
+              }
+            },
+            {
+              value: this.kidsCount,
+              itemStyle: {
+                color: '#80b3ff'
+              }
+            }
+          ],
+          type: 'line',
+          smooth: true
+        }
+      ]
+    }
+myChart.setOption(option)
+myChart.on('error', function(error) {
+  console.error('Echarts error: ', error)
+})
+
+  }
 }
