@@ -49,7 +49,19 @@ const userSchema = new mongoose.Schema({
     image: {
         type: String,
         default: ''
-    }
+    },
+    orders: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Orders'
+        }
+    ],
+    wishlist: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Products'
+        }
+    ]
 })
 
 userSchema.virtual('id').get(function() {

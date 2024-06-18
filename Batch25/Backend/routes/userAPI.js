@@ -8,6 +8,31 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const {authenticateToken} = require('../AuthServices/authentication')
 const {checkRole} = require('../AuthServices/checkRole')
+const multer = require('multer')
+
+const FILE_TYPE_MAP = {
+    'image/png':'png',
+    'image/jpeg' : 'jpeg',
+    'image/jpg' : 'jpg'
+}
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        const isValid = FILE_TYPE_MAP[file.mimetype]
+        let uploadError = new Error('Invalid Image Type')
+        if(isValid){
+            uploadError = null
+        }
+        cb(uploadError, 'public/uploads' )
+    },
+    filename: function(req, file, cb){
+        const fileName = file.originalname.split(' ').join('-')
+        const extension = FILE_TYPE_MAP[file.mimetype]
+        cb(null, `${fileName}-${Date.now()}.${extension}`)
+    }
+})
+
+const uploadOptions = multer({storage:storage})
 
 //Getting all Users
 router.get('/getUsers',authenticateToken, checkRole, async (req, res) => {
@@ -97,6 +122,7 @@ router.post('/login', async (req, res) => {
     }
     if(existingUser && bcrypt.compareSync(user.password, existingUser.password)){
         const payload = {
+            id: existingUser._id,
             email: existingUser.email,
             role: existingUser.role,
             name: existingUser.name
@@ -114,6 +140,47 @@ router.post('/login', async (req, res) => {
 
 
 
+
+})
+
+
+router.patch('/update/:id', uploadOptions.single('image') , authenticateToken, async (req, res) => {
+    const userId = req.params.id
+    const newData = req.body
+    if(!mongoose.isValidObjectId(userId)){
+        return res.status(500).send({
+            message: 'Invalid Object Id' 
+        })
+    }
+    const file = req.file
+    let imagePath;
+    if(file){
+        const fileName = req.file.filename
+        const basePath = `${req.protocol}://${req.get('host')}/public/uploads/`
+        imagePath = `${basePath}${fileName}`
+    }
+    updateUser = await User.findByIdAndUpdate(userId, {
+        name: newData.name,
+        email: newData.email,
+        phone: newData.phone,
+        apartment: newData.apartment,
+        street: newData.street,
+        city: newData.city,
+        state: newData.state,
+        country: newData.country,
+        image: imagePath
+    }, {new: true})
+    if(!updateUser){
+        return res.status(500).send({
+            message:" Invalid User Selection"
+        })
+    }
+    else{
+        return res.status(200).send({
+            message: 'User Updated Successfully',
+            newData: updateUser
+        })
+    }
 
 })
 

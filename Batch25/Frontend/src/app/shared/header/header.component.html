@@ -36,6 +36,6 @@
 
 
 <mat-menu #userMenu>
-    <li mat-menu-item>Profile</li>
+    <li mat-menu-item [routerLink]="'/profile'">Profile</li>
     <li mat-menu-item (click)="onExit()">Exit</li>
 </mat-menu>
