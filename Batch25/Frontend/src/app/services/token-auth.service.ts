@@ -26,6 +26,15 @@ export class TokenAuthService {
     return this.token$
   }
 
+  getUserId(): Observable<any>{
+    const token = sessionStorage.getItem('token')
+    let user: any
+    if(token){
+      user = jwtDecode(token)
+    }
+    return user.id
+  }
+
   exit(){
     sessionStorage.removeItem('token')
     this.tokenSubject.next('')
