@@ -1,1 +1,170 @@
-<p>user-profile works!</p>
+<div class="container-fluid" style="margin-bottom: 10rem;">
+  
+    <div class="row ">
+      <div class="col-sm-3 " style="height: 100vh; ">
+        <div class="text-center">
+          <div  style=" width: 200px; height: 200px; box-shadow: var(--box-shadow);margin-top: 5rem; border-radius: 200px; margin-left: 50px;">
+            <img src="{{(userDetails$ | async)?.image}}" class="w-100 h-100" style="border-radius: 200px;">
+      
+          </div>
+  
+          <div style="margin-top: 1rem">
+            <span class="fs-2 text-danger">{{(userDetails$ | async)?.name}}</span>
+          </div>
+          <div style="margin-top: 1rem">
+            <span class="fs-5 text-success">{{(userDetails$ | async)?.email}}</span>
+          </div>
+          <div style="margin-top: 1rem">
+            <span class="fs-5 text-dark">{{(userDetails$ | async)?.phone}}</span>
+          </div>
+          <div style="margin-top: 1rem">
+            <span class="fs-6 text-info" style="cursor: pointer;"><a mat-button >Change Password?</a></span>
+          </div>
+        </div>
+        
+        
+      </div>
+      <div class="col-sm-9 " >
+        <div class="row p-2" >
+          <div class="col-8 col-sm-6  "  >
+            <div class="rounded-5" style="height: 18vh; width: 350px; box-shadow: var(--box-shadow);" >
+              <div class="text-center p-3">
+                Total Orders: <span class="fs-1 text-danger ">
+                     ??????
+                    </span>
+              </div>
+              
+             
+            </div>
+          </div>
+          <div class="col-4 col-sm-6 ">
+            <div class="rounded-5" style="height: 18vh; width: 350px; box-shadow: var(--box-shadow);" >
+              <div class="text-center p-3">
+                Total Wishlist: <span class="fs-1 text-danger "> 
+                   ??????
+                </span>
+              </div>
+              
+              
+            </div>
+          </div>
+        </div>
+        <div class="row" >
+            <div class="col-12 col-sm-12 text-center" style="height: 80vh;">
+              <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="end" >
+                <mat-tab label="Personal Details" >
+                    <mat-grid-list cols="1" rowHeight="400px"  gutterSize="10px">
+                        <mat-grid-tile>
+                          <div class="row w-100 h-100 ">
+                              <div class="d-flex">
+                                <form [formGroup]="userForm" style="margin-top: 10px;">
+                                  <div class="col" style="margin-right: 20px; width: 400px">
+                                   
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Name:</mat-label>
+                                        <input matInput formControlName="name">
+                                      </mat-form-field>
+                                    </p>
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Email:</mat-label>
+                                        <input matInput formControlName="email">
+                                      </mat-form-field>
+                                    </p>
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Phone:</mat-label>
+                                        <input matInput formControlName="phone">
+                                      </mat-form-field>
+                                    </p>
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Apartment:</mat-label>
+                                        <input matInput formControlName="apartment">
+                                      </mat-form-field>
+                                    </p>
+                                  </div>
+                                  </form>
+                                  
+                                  <div class="col w-100">
+                                    <form [formGroup]="userForm" style="margin-top: 10px;">
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Street:</mat-label>
+                                        <input matInput formControlName="street">
+                                      </mat-form-field>
+                                    </p>
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>City:</mat-label>
+                                        <input matInput formControlName="city">
+                                      </mat-form-field>
+                                    </p>
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>State:</mat-label>
+                                        <input matInput formControlName="state">
+                                      </mat-form-field>
+                                    </p>
+                                    <p>
+                                      <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Country:</mat-label>
+                                        <input matInput formControlName="country">
+                                      </mat-form-field>
+                                    </p>
+                                  </form>
+                                  </div>
+                                  
+                              </div>
+                          </div>
+                                
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                    <div class="row">
+                      <div class="col-md-4 mb-5 mr-2">
+                       
+                          <div class="input-container">
+                            <div>Browse for Image to Upload <span style="color:red">*</span> </div>
+                            <input matInput placeholder="Choose file" [value]="selectedFileName" #fileInputField readonly style="display: none;">
+                            <input #fileInput type="file" id="image" name="image" (change)="onFileSelected($event)" style="display: none;">
+                            <button mat-mini-fab (click)="openFileInput()" tabIndex="-1" color="primary" >
+                              <mat-icon>attach_file</mat-icon>
+                            </button>
+                          </div>
+                        
+                      </div>
+                      
+                      <div class="d-flex col-md-3 mb-1 mr-2" *ngIf="selectedImage">
+                        <span style="color:green">Preview:</span>
+                        <span><img [src]="selectedImage" alt="Selected Image" style="max-width: 100px; max-height: 100px;"></span>
+                      </div>
+                      
+                   </div>
+                   <div>
+                    <button mat-mini-fab color="warn" (click)="updateUser()"><mat-icon>save</mat-icon></button>
+                   </div>
+                   
+                </mat-tab>
+                <mat-tab label="Orders" >
+                  <mat-grid-list cols="1" rowHeight="440px"  gutterSize="10px">
+                      <mat-grid-tile>
+                        Order Details here...
+                      </mat-grid-tile>
+                 </mat-grid-list>
+              </mat-tab>  
+                <mat-tab label="Wishlist" >
+                  <mat-grid-list cols="1" rowHeight="440px"  gutterSize="10px">
+                      <mat-grid-tile >
+                        Wishlist here...                             
+                      </mat-grid-tile>
+                 </mat-grid-list>
+              </mat-tab>
+              </mat-tab-group>
+            </div>
+            
+          </div>
+      </div>
+      
+    </div>
+  </div>
