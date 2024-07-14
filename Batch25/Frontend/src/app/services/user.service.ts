@@ -31,6 +31,10 @@ export class UserService {
   updateUser(uId: any, data: any){
     return this._http.patch(`${this._url}/user/update/${uId}`, data)
   }
+
+  getPasswordResetLink(data: any): Observable<any>{
+    return this._http.post<any>(`${this._url}/user/reset-password`, data)
+  }
   
 
 }

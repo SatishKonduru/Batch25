@@ -8,6 +8,8 @@ import { userModel } from '../../shared/models/model';
 import { Observable, map, shareReplay } from 'rxjs';
 import { SnackbarService } from '../../services/snackbar.service';
 import { globalProperties } from '../../shared/globalProperties';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 
 @Component({
   selector: 'user-profile',
@@ -26,6 +28,7 @@ export class UserProfileComponent implements OnInit{
   snackbar = inject(SnackbarService)
   responseMsg: any = ''
   userForm: any = FormGroup 
+  dialog = inject(MatDialog)
 
   ngOnInit(): void {
     this.userId = this.userToken.getUserId()
@@ -119,7 +122,13 @@ updateUser(){
   })
 }
 
-
+changePassword(){
+  const dialogConfig = new MatDialogConfig()
+  dialogConfig.width = '500px'
+  dialogConfig.disableClose = true
+  dialogConfig.autoFocus = true
+  this.dialog.open(ForgotPasswordComponent, dialogConfig)
+}
 
 
 

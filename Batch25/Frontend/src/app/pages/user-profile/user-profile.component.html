@@ -18,7 +18,9 @@
             <span class="fs-5 text-dark">{{(userDetails$ | async)?.phone}}</span>
           </div>
           <div style="margin-top: 1rem">
-            <span class="fs-6 text-info" style="cursor: pointer;"><a mat-button >Change Password?</a></span>
+            <span class="fs-6 text-info" style="cursor: pointer;"><a mat-button 
+              (click)="changePassword()"
+              >Change Password?</a></span>
           </div>
         </div>
         
