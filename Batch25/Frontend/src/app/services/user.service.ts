@@ -36,5 +36,8 @@ export class UserService {
     return this._http.post<any>(`${this._url}/user/reset-password`, data)
   }
   
+  updatePassword(data:any): Observable<any>{
+    return this._http.post<any>(`${this._url}/user/update-password`, data)
+  }
 
 }

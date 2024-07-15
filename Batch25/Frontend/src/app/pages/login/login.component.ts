@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AngularMaterialModule } from '../../modules/angular-material/angular-material.module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -7,11 +7,13 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { globalProperties } from '../../shared/globalProperties';
 import { jwtDecode } from 'jwt-decode';
 import { TokenAuthService } from '../../services/token-auth.service';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 @Component({
   selector: 'login',
   standalone: true,
-  imports: [AngularMaterialModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [AngularMaterialModule, FormsModule, ReactiveFormsModule, RouterModule, ForgotPasswordComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   providers: [UserService, SnackbarService, TokenAuthService]
@@ -20,6 +22,7 @@ export class LoginComponent implements OnInit{
 public loginForm: any = FormGroup
 responseMsg: any = ''
 payload: any;
+dialog = inject(MatDialog)
 constructor(private _formBuilder: FormBuilder,
   private _userService: UserService,
   private _snackbar: SnackbarService,
@@ -61,6 +64,12 @@ onLogin(){
     }
   })
 }
-
+forgotPassword(){
+  const dialogConfig = new MatDialogConfig()
+  dialogConfig.width = '500px'
+  dialogConfig.disableClose = true
+  dialogConfig.autoFocus = true
+  this.dialog.open(ForgotPasswordComponent, dialogConfig)
+}
 
 }

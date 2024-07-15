@@ -41,6 +41,9 @@
                     </form>
                     <!-- <a routerLink="/register" class="text-decoration-none text-black">New User?</a> -->
                     <a [routerLink]="'/register'" class="text-decoration-none text-black">New User?</a>
+                    <span style="margin-left: 5rem;">
+                        <a mat-button (click)="forgotPassword()">Forgot Password</a>
+                    </span>
                     <button mat-stroked-button color="primary" class="float-end mt-2" (click)="onLogin()">Login</button>
                 </div>
             </div>
