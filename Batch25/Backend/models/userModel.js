@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const {Product} = require('./productModel')
+const {Order} = require('./orderModel')
 const userSchema = new mongoose.Schema({
     name: {
             type: String,
@@ -54,7 +55,7 @@ const userSchema = new mongoose.Schema({
     orders: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Orders'
+            ref: 'Order'
         }
     ],
     resetToken: {
