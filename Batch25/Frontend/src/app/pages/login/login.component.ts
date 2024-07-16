@@ -19,6 +19,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
   providers: [UserService, SnackbarService, TokenAuthService]
 })
 export class LoginComponent implements OnInit{
+  timestamp = Date.now()
 public loginForm: any = FormGroup
 responseMsg: any = ''
 payload: any;
