@@ -1,0 +1,71 @@
+<mat-toolbar style="height:50px; padding-top: 10px; display: flex; justify-content: space-between;" color="warn">
+<span></span>
+<mat-button mat-dialog-close><mat-icon>close</mat-icon></mat-button>
+</mat-toolbar>
+<div class="container-fluid">
+    <mat-grid-list cols="2">
+        <mat-grid-tile>
+            <div style="height: 600px; width: 500px">
+                <img src="{{dialogData.image}}" 
+                style="height: 76%; 
+                       width: 100%;
+                       border-radius: 4%;
+                       margin-top: 4rem;
+                       padding: 10px">
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div style="height: 600px; width: 500px; margin-top: 10rem; padding: 10px">
+                <h4>Name: <span class="text-success"> {{dialogData.name}}</span></h4>
+                <h6><span class="text-danger">
+                    {{dialogData.description}}
+                </span></h6>
+                <mat-divider></mat-divider>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Brand</th>
+                            <th scope="col">Season</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{dialogData.brand}}</td>
+                            <td>{{dialogData.season}}</td>
+                            <td> &#8377; {{dialogData.price}} /-</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Style</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Color</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{dialogData.style}}</td>
+                            <td>{{dialogData.size}}</td>
+                            <td>{{dialogData.color}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="mt-3">
+                    <div [innerHTML]="htmlContent"></div>   
+                    <div class="mt-3">
+                        <mat-dialog-actions align="center">
+                            <button mat-flat-button color="primary" style="display: flex; align-items: center;"><span style="order:2; ">Add to</span><mat-icon style="order:1; margin-left: 4px;">add_shopping_cart</mat-icon> </button>
+                            <button mat-flat-button color="warn">
+                                Add to 
+                                <i class="fa fa-heart" aria-hidden="true" style="font-size: 20px"></i>
+                            </button>
+                        </mat-dialog-actions>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>
