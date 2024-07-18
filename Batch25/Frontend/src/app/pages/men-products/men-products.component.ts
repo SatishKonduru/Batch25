@@ -34,6 +34,8 @@ export class MenProductsComponent implements OnInit{
       })
     )
   }
-
+  openProductDetails(product: any){
+    
+  }
 
 }
