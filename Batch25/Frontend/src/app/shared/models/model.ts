@@ -1,3 +1,5 @@
+import { InterpolationConfig } from "@angular/compiler"
+
 export interface userModel{
     name: string,
     email: string,
@@ -12,7 +14,7 @@ export interface userModel{
     country? : string,
     image ?: string ,
     orders? : [string],
-    wishlist? : [string]
+    wishlist? : WishlistItem[]
 }
 
 export interface productModel {
@@ -37,4 +39,16 @@ export interface categoryModel {
     id: string,
     name: string,
     icon ?: string
+}
+
+export interface WishlistItem {
+    _id: string,
+    name: string,
+    description: string,
+    image: string,
+    color: string,
+    price:  number,
+    size: string,
+    style: string,
+    season: string
 }

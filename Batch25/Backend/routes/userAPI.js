@@ -97,7 +97,7 @@ router.get('/getById/:id', authenticateToken, async (req, res) => {
             message: 'Invalid User Id'
         })
     }
-   userDetails = await User.findById(id)
+   userDetails = await User.findById(id).populate('wishlist')
    if(userDetails.length <= 0 ){
     return res.status(500).send({
         message: "Internal Server Error."
@@ -257,7 +257,40 @@ router.post('/update-password', async(req, res) => {
     }
 })
 
-
+router.patch('/addToWishList/:id',authenticateToken, async(req, res) => {
+    try{
+        const wishlistProduct = req.body.product.id
+        const userId = req.params.id
+        if(!mongoose.isValidObjectId(userId)){
+            return res.status(500).send({
+                message: 'Invalid Object Id'
+            })
+        }
+        const user = await User.findById(userId)
+        if(!user){
+            return res.status(404).send({
+                message: 'User Not Found!'
+            })
+        }
+        const isProductInWishList = user.wishlist.some(item => item.equals(wishlistProduct))
+        if(isProductInWishList){
+            return res.status(400).send({
+                message: 'Product Already in Wishlist'
+            })
+        }
+        user.wishlist.push(wishlistProduct)
+        await user.save()
+        return res.status(200).send({
+            message: 'Product added to wishlist successfully'
+        })
+    }
+    catch(error){
+        console.error('Error while adding product to wishlist: ', error)
+        return  res.status(500).send({
+            message: 'Internal Server Error'
+        })
+    }
+})
 
 
 
