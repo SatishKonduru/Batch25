@@ -292,6 +292,25 @@ router.patch('/addToWishList/:id',authenticateToken, async(req, res) => {
     }
 })
 
-
+router.get('/wishlist/count/:id', authenticateToken, async (req, res) => {
+const userId =req.params.id
+try{
+    const user = await User.findById(userId)
+    if(!user){
+        return res.status(404).send({
+            mesage: 'User Not Found' 
+        })
+    }
+    const wishListCount = user.wishlist.length
+    res.status(200).send({
+        wishlistCount: wishListCount
+    })
+}
+catch(error){
+    res.status(500).send({
+        message: 'Internal Server Error'
+    })
+}
+})
 
 module.exports = router

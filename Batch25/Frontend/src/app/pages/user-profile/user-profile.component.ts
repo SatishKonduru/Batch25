@@ -29,6 +29,7 @@ export class UserProfileComponent implements OnInit{
   responseMsg: any = ''
   userForm: any = FormGroup 
   dialog = inject(MatDialog)
+  wishlistCount : number
 
   ngOnInit(): void {
     this.userId = this.userToken.getUserId()
@@ -47,6 +48,7 @@ export class UserProfileComponent implements OnInit{
     this.userDetails$.subscribe(res => {
       this.userForm.patchValue(res)
     })
+    this.getWishlistCount(this.userId)
   }
 
   getUserDetails(userId: any){
@@ -130,7 +132,16 @@ changePassword(){
   this.dialog.open(ForgotPasswordComponent, dialogConfig)
 }
 
-
+getWishlistCount(uId: any){
+  this.userService.wishListCount(uId).subscribe({
+    next: (res: any) => {
+        this.wishlistCount = res.wishlistCount
+    },
+    error: (err: any) => {
+      
+    }
+  })
+}
 
 
 }

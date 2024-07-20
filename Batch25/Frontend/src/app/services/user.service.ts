@@ -44,5 +44,9 @@ export class UserService {
     return this._http.patch<userModel>(`${this._url}/user/addToWishList/${userId}`, {product:data})
   }
 
+  wishListCount(uId: any){
+    return this._http.get<any>(`${this._url}/user/wishlist/count/${uId}`)
+  }
+
 
 }

@@ -1,1 +1,25 @@
-<p>women-products works!</p>
+<div class="container-fluid mb-5">
+    <div class="col-12 mt-4  rounded-4 " style="height: 300px; box-shadow: var(--box-shadow); ">
+        <img src="../../../assets/banner/womenBanner.jpg?v={{timestamp}}" class="w-50 h-100">
+        <img src="../../../assets/banner/womenBanner2.jpg?v={{timestamp}}" class="w-50 h-100 " >
+    </div>
+    <div class="col-md-12 col-sm-6 d-flex flex-wrap flex-grow-1 ">
+        @if(loaderService.loader$ | async){
+            <mat-spinner color="warn" [diameter]="spinnerSize" ></mat-spinner>
+        }
+        @for(product of womenProducts$ | async; track product){
+            <div class="card animate__animated animate__flipInY p-2 products" style="width: 18rem;   margin-left: 2rem;   margin-top: 1rem;" >
+                <img src="{{product.image}}" class="card-img-top h-100 rounded-2" >
+                <div class="card-body">
+                <h5 class="card-title">{{product.name}}</h5>
+                <div class="d-flex justify-content-between">
+                    <div class="card-text ">{{product.description}}</div>
+                    <div class="card-text">&#8377; {{product.price}}/-</div>
+                </div>
+               
+                <button mat-mini-fab color="primary" style="font-size: 8px; padding: 4px; margin-top: 1rem;" (click)="openProductDetails(product)"><mat-icon >visibility</mat-icon></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
