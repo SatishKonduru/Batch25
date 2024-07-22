@@ -30,10 +30,15 @@
     </nav>
     <span class="spacer"></span>
     <span>
-        <mat-icon type="button" style="font-size: 30px; margin-right: 2rem; padding-top:10px; color: azure" matBadge="?" matBadgeColor="accent" matBadgeOverlap="false" aria-hidden="false">add_shopping_cart</mat-icon>
+        <button mat-icon-button (click)="openCart()">
+            <mat-icon type="button" style="font-size: 30px; margin-right: 2rem; padding-top:10px; color: azure" matBadge="?" matBadgeColor="accent" matBadgeOverlap="false" aria-hidden="false">add_shopping_cart</mat-icon>
+        </button>
+        
     </span>
 </mat-toolbar>
-
+@if(cartService.isCartOpen()){
+    <cart></cart>
+}
 
 <mat-menu #userMenu>
     <li mat-menu-item [routerLink]="'/profile'">Profile</li>
