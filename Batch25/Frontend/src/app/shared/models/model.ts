@@ -14,7 +14,8 @@ export interface userModel{
     country? : string,
     image ?: string ,
     orders? : [string],
-    wishlist? : WishlistItem[]
+    wishlist? : WishlistItem[],
+    cartItems? : CartItems[]
 }
 
 export interface productModel {
@@ -51,4 +52,18 @@ export interface WishlistItem {
     size: string,
     style: string,
     season: string
+}
+
+export interface CartItems{
+    _id: string,
+    name: string,
+    description: string,
+    image: string,
+    color: string,
+    price: number,
+    size: string,
+    style:string,
+    season: string,
+    quantity: number,
+    total: number
 }
