@@ -32,4 +32,5 @@ cartSchema.virtual('id').get(function() {
 })
 cartSchema.set('toJSON', {virtuals: true})
 const Cart = mongoose.model('Cart', cartSchema,'carts')
-module.exports = { Wishlist: Wishlist}
+
+module.exports = { Cart : Cart }

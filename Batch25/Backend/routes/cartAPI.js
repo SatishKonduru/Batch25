@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const {User} = require('../models/userModel')
 const {Product} = require('../models/productModel')
-const {authenticateToken} = require('../AuthServices/authorization')
+const {authenticateToken} = require('../AuthServices/authentication')
 const { Cart } = require('../models/cartModel')
 
 router.put('/addToCart/:userId', authenticateToken, async (req, res) => {
@@ -33,7 +33,7 @@ router.put('/addToCart/:userId', authenticateToken, async (req, res) => {
         console.error('Error adding product to cart:', error);
         res.status(500).send({ message: 'Internal Server Error' });
     }
-});
+})
 
 //  get cart products for a particular user
 router.get('/getCart/:userId', authenticateToken, async (req, res) => {
