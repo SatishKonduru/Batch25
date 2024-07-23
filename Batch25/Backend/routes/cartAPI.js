@@ -55,8 +55,10 @@ router.get('/getCart/:userId', authenticateToken, async (req, res) => {
 });
 
 router.delete('/deleteProduct/:uId/:pId', authenticateToken, async (req, res) => {
-    const userId = res.params.uId
+    const userId = req.params.uId
     const productId = req.params.pId
+
+    console.log("UserId and Product Id:", userId, productId)
     try{
         const cart = await Cart.findOne({user: userId})
         if(!cart){

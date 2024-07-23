@@ -32,7 +32,7 @@
             <div class="rounded-5" style="height: 18vh; width: 350px; box-shadow: var(--box-shadow);" >
               <div class="text-center p-3">
                 Total Orders: <span class="fs-1 text-danger ">
-                     ??????
+                     {{ordersCount}}
                     </span>
               </div>
               
@@ -151,7 +151,30 @@
                 <mat-tab label="Orders" >
                   <mat-grid-list cols="1" rowHeight="440px"  gutterSize="10px">
                       <mat-grid-tile>
-                        Order Details here...
+                       <table class="table table-hover">
+                        <thead class="sticky-top">
+                            <tr>
+                              <th scope="col">Image</th>
+                              <th scope="col">Product</th>
+                              <th scope="col">Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngFor="let order of orderDetails">
+                            <tr *ngFor="let item of order.items">
+                              <td>
+                                <img src="{{item.product.image}}" height="100px" width="100px">
+                              </td>
+                              <td>
+                                {{item.product.name}}
+                              </td>
+                              <td [ngStyle]="{'color': getStatusColor(order.status)}">
+                                {{order.status}}
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                       </table>
                       </mat-grid-tile>
                  </mat-grid-list>
               </mat-tab>  

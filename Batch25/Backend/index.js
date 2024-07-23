@@ -6,6 +6,8 @@ const userRoute = require('./routes/userAPI')
 const productRoute = require('./routes/productAPI')
 const categoryRoute = require('./routes/categoryAPI')
 const cartRoute = require('./routes/cartAPI')
+const orderRoute = require('./routes/orderAPI')
+
 
 const api = process.env.API_URL  
 const app = express()
@@ -16,6 +18,7 @@ app.use(`${api}/user`, userRoute)
 app.use(`${api}/product`, productRoute)
 app.use(`${api}/category`, categoryRoute)
 app.use(`${api}/cart`, cartRoute)  
+app.use(`${api}/order`, orderRoute)
 app.use('/public/uploads', express.static(__dirname+'/public/uploads'))
  
 module.exports = app

@@ -45,7 +45,9 @@
         <div align="center">
             <h6 class="text-danger mt-5">Grand Total: </h6>
             <h2 class="text-primary mt-3">&#8377; {{calculateGrandTotal()}} /-</h2>
-            <button mat-raised-button color="warn" style="margin-top: 50px;">Checkout</button>
+            <button mat-raised-button color="warn" style="margin-top: 50px;"
+            (click)="checkOut(dialogData.data.items)"
+            >Checkout</button>
         </div>
     </div>
 </div>

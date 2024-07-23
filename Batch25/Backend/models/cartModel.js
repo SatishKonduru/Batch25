@@ -27,6 +27,13 @@ const cartSchema = new mongoose.Schema({
         default: 'Active'
     }
 })
+
+//method to clear cart items
+cartSchema.methods.clearItems = async function(){
+    this.items  = []
+    this.status = 'Completed',
+    await this.save()
+}
 cartSchema.virtual('id').get(function() {
     return this._id.toHexString()
 })

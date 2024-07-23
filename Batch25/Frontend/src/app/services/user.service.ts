@@ -48,5 +48,8 @@ export class UserService {
     return this._http.get<any>(`${this._url}/user/wishlist/count/${uId}`)
   }
 
+  getOrders(uId: any) {
+    return this._http.get<any>(`${this._url}/order/orderDetails/${uId}`)
+  }
 
 }

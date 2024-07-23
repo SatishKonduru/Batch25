@@ -38,6 +38,7 @@ export class CartService {
   }
 
   deleteFromCart(userId: any, productId: any):Observable<any>{
+    console.log("User id and PRoduct Id:", userId, productId)
     return this._http.delete<any>(`${this._url}/cart/deleteProduct/${userId}/${productId}`)
   }
 }

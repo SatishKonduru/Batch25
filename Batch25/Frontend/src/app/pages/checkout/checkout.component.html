@@ -1,0 +1,31 @@
+<mat-toolbar color="warn" style="height: 50px;" class="d-flex justify-content-between">
+<span>Place your Order</span>
+<span></span>
+<span>
+    <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+</span>
+</mat-toolbar>
+<div class="p-3">
+    <table class="table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(product of dialogData.data; track product){
+                <tr>
+                    <td>{{product.product.name}}</td>
+                    <td>&#8377; {{product.product.price}} /-</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="mt-5">
+        Total: <span class="fs-2 text-success"> &#8377; {{dialogData.bill}}</span>
+    </div>
+    <div class="mt-3 text-center">
+        <button mat-raised-button color="primary" (click)="placeOrder(dialogData)">Place Order</button>
+    </div>
+</div>

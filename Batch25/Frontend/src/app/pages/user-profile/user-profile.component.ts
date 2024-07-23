@@ -30,7 +30,8 @@ export class UserProfileComponent implements OnInit{
   userForm: any = FormGroup 
   dialog = inject(MatDialog)
   wishlistCount : number
-
+  orderDetails : any = []
+  ordersCount : number = 0
   ngOnInit(): void {
     this.userId = this.userToken.getUserId()
     this.getUserDetails(this.userId)
@@ -49,6 +50,7 @@ export class UserProfileComponent implements OnInit{
       this.userForm.patchValue(res)
     })
     this.getWishlistCount(this.userId)
+    this.getOrderDetails(this.userId)
   }
 
   getUserDetails(userId: any){
@@ -143,5 +145,32 @@ getWishlistCount(uId: any){
   })
 }
 
+getOrderDetails(uId: any){
+this.userService.getOrders(uId).subscribe({
+  next: (res: any) => {
+    this.orderDetails = res.orderDetails
+    let totalCount = 0
+    this.orderDetails.forEach((order: any) => {
+      order.items.forEach((item: any) => {
+        totalCount += item.quantity
+      })
+    })
+    this.ordersCount = totalCount
+  },
+  error: (err: any) => {
+    console.log('Error while getting order Details')
+  }
+})
+}
+
+
+getStatusColor(status: string): string{
+  switch(status){
+    case 'Pending': return 'red';
+    case 'Shipped': return 'blue';
+    case 'Deliverd' : return 'green'
+    default: return 'black'
+  }
+}
 
 }
