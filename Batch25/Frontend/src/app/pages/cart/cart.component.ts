@@ -22,6 +22,7 @@ userToken = inject(TokenAuthService)
 cartItems$ : Observable<any>
 cartDetails: any = []
 dialog = inject(MatDialog)
+
 constructor(){
   this.getCartItens()
 }
@@ -43,12 +44,14 @@ closeCart(){
   this.cartService.toggleCart()
 }
 
+
 getCartItens(){
   this.cartItems$ = this.cartService.getCartItems(this.userId).pipe(
     map(item => {
-      if(item.cart.status == 'Active'){
-        return item.cart
-      }
+      // if(item.cart.status == 'Active'){
+      //   return item.cart
+      // }
+      return item.cart
     }),
     shareReplay()
   )

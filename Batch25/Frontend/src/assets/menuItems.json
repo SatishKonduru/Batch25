@@ -28,6 +28,13 @@
     {
         "route" : "orders",
         "name" : "Orders",
-        "icon": "redeem"
+        "icon": "redeem",
+        "children": [
+            {
+                "route": "orders",
+                "name": "Orders",
+                "icon": "shopping_basket"
+            }
+        ]
     }
 ]

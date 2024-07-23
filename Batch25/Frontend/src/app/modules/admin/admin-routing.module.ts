@@ -5,6 +5,7 @@ import { MenComponent } from './products/men/men.component';
 import { WomenComponent } from './products/women/women.component';
 import { KidsComponent } from './products/kids/kids.component';
 import { AdminComponent } from './admin.component';
+import { OrdersComponent } from './orders/orders.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'products/kids',
         component: KidsComponent
+      },
+      {
+        path: 'products/orders',
+        component: OrdersComponent
       }
     ]
   }

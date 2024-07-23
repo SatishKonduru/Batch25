@@ -3,7 +3,7 @@ const router = express.Router()
 const {authenticateToken} = require('../AuthServices/authentication')
 const {Order} = require('../models/orderModel')
 const {Cart} = require('../models/cartModel')
-
+const {checkRole} = require('../AuthServices/checkRole')
 
 router.post('/newOrder/:uId', authenticateToken, async (req, res) => {
     const userId = req.params.uId
@@ -53,6 +53,21 @@ router.get('/orderDetails/:uId', authenticateToken, async (req, res) => {
     }
 })
 
+
+router.get('/getAllOrders', authenticateToken, checkRole, async (req, res) => {
+    try{
+        const orders = await Order.find().populate('user').populate('items.product')
+        return res.status(200).send({
+            orders: orders
+        })
+    }
+    catch(error){
+        console.error('Errr while fetching orders: ', error)
+        return res.status(500).send({
+            message: 'Internal Server Error'
+        })
+    }
+} )
 
 
 module.exports = router
