@@ -8,6 +8,7 @@ import { TokenAuthService } from '../../services/token-auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { Router } from '@angular/router';
 import { globalProperties } from '../../shared/globalProperties';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'product-details',
@@ -23,6 +24,7 @@ userService = inject(UserService)
 tokenService = inject(TokenAuthService)
 responseMsg : any = ''
 snackbar = inject(SnackbarService)
+cartService = inject(CartService)
 router = inject(Router)
 constructor(@Inject(MAT_DIALOG_DATA) public dialogData : any){
   console.log("dialogData: ", dialogData)
@@ -52,6 +54,33 @@ addToWishList(product: any){
     })
   }
   else{}
+}
+
+addToCart(){
+  let userId = this.tokenService.getUserId()
+  const token = sessionStorage.getItem('token')
+  if(!token){
+    this.responseMsg = 'Please Login'
+    this.snackbar.openSnackbar(this.responseMsg, globalProperties.error)
+  }
+  else{
+    this.cartService.addToCart(userId, this.dialogData).subscribe({
+      next: (res: any) => {
+        this.responseMsg = res?.message
+        this.snackbar.openSnackbar(this.responseMsg, 'succes')
+        this.cartService.notifyProductAdded()
+      },
+      error: (err: any) => {
+        if(err.error?.message){
+          this.responseMsg = err.error?.message
+        }
+        else{
+          this.responseMsg = globalProperties.genericError
+        }
+        this.snackbar.openSnackbar(this.responseMsg, globalProperties.error)
+      }
+    })
+  }
 }
 
 }
