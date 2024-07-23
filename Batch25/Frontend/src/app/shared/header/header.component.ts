@@ -1,9 +1,9 @@
-import { AfterViewChecked, Component, inject } from '@angular/core';
+import { AfterViewChecked, Component, inject, OnInit } from '@angular/core';
 import { AngularMaterialModule } from '../../modules/angular-material/angular-material.module';
 import { jwtDecode } from 'jwt-decode';
 import { Router, RouterModule } from '@angular/router';
 import { TokenAuthService } from '../../services/token-auth.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { CartComponent } from '../../pages/cart/cart.component';
 import { CartService } from '../../services/cart.service';
@@ -18,13 +18,15 @@ import { globalProperties } from '../globalProperties';
   styleUrl: './header.component.css',
   providers: [TokenAuthService]
 })
-export class HeaderComponent implements AfterViewChecked{
+export class HeaderComponent implements AfterViewChecked, OnInit{
 // user: string = ''
 // payload: any = {}
 userToken$ : Observable<string>
 cartService = inject(CartService)
 responseMsg: any = ''
 snacbar = inject(SnackbarService)
+userId: any;
+cartCount: any
 constructor(private _tokenAuth: TokenAuthService, private _router: Router){}
 
 ngAfterViewChecked(): void {
@@ -40,6 +42,27 @@ ngAfterViewChecked(): void {
 
 }
 
+ngOnInit(): void {
+  this.getCartCount()
+  this.cartService.productAdded$.subscribe(() => {
+    this.getCartCount()
+  })
+}
+
+
+async getCartCount(){
+try{
+  this.userId = this._tokenAuth.getUserId()
+  this.cartService.getCartItems(this.userId).pipe(
+    map(item => item.cart.items)
+  ).subscribe(cartItems => {
+    this.cartCount = cartItems.length
+  })
+}
+catch(error){
+  console.log("Error while fetching cart Items: ", error)
+}
+}
 onExit(){
   // sessionStorage.removeItem('token')
   // this.user = ''

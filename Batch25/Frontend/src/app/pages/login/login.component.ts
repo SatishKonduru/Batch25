@@ -9,6 +9,7 @@ import { jwtDecode } from 'jwt-decode';
 import { TokenAuthService } from '../../services/token-auth.service';
 import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'login',
@@ -24,6 +25,7 @@ public loginForm: any = FormGroup
 responseMsg: any = ''
 payload: any;
 dialog = inject(MatDialog)
+cartService = inject(CartService)
 constructor(private _formBuilder: FormBuilder,
   private _userService: UserService,
   private _snackbar: SnackbarService,
@@ -52,6 +54,7 @@ onLogin(){
       }
       else{
         this._router.navigate(['/'])
+        this.cartService.notifyProductAdded()
       }
     },
     error: (err: any) => {

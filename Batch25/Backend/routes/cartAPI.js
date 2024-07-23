@@ -54,5 +54,38 @@ router.get('/getCart/:userId', authenticateToken, async (req, res) => {
     }
 });
 
+router.delete('/deleteProduct/:uId/:pId', authenticateToken, async (req, res) => {
+    const userId = res.params.uId
+    const productId = req.params.pId
+    try{
+        const cart = await Cart.findOne({user: userId})
+        if(!cart){
+            return res.status(404).send({
+                message: 'Cart NOT found'
+            })
+        }
+        // find the index of the item to be removed
+        const index = cart.items.findIndex(item => item.product.toString() === productId)
+        if(index === -1){
+            return res.status(404).send({
+                message: 'Product NOT found in the CART'
+            })
+        }
+        //remove the item from cart
+        cart.items.splice(index, 1)
 
+        //save the updated cart
+        await cart.save()
+        res.status(200).send({
+            message: 'Product removed from the cart succssfully'
+        })
+
+    }
+    catch(error){
+        console.error("Error while removing product from the cart: ", error)
+        res.status(500).send({
+            messge:'Internal Server Error'
+        })
+    }
+})
 module.exports = router

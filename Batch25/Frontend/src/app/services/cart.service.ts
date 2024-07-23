@@ -37,5 +37,7 @@ export class CartService {
     return this._http.get<any>(`${this._url}/cart/getCart/${userId}`)
   }
 
-
+  deleteFromCart(userId: any, productId: any):Observable<any>{
+    return this._http.delete<any>(`${this._url}/cart/deleteProduct/${userId}/${productId}`)
+  }
 }

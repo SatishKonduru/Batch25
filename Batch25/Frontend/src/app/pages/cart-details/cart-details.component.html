@@ -1,0 +1,52 @@
+<mat-toolbar color="warn" style="height: 50px;" class="d-flex justify-content-between sticky-top">
+    <span>Cart</span>
+    <span></span>
+    <span>
+        <button mat-icon-button mat-dialog-close><mat-icon>close</mat-icon></button>
+    </span>
+</mat-toolbar>
+
+<div class="container-fluid d-flex">
+    <div class="col-9 mt-4 p-3" style="box-shadow: var(--box-shadow);">
+        <table class="table table-hover">
+            <thead>
+               <tr>
+                <th scope="col">Product</th>
+                <th > Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th ></th>
+               </tr> 
+            </thead>
+            <tbody>
+                @for(product of dialogData.data.items; track product; let i = $index){
+                    <tr>
+                        <td><img src="{{product.product?.image}}" height="100px" width="100px"></td>
+                        <td>{{product.product?.description}}</td>
+                        <td>&#8377; {{product.product?.price}} /-</td>
+                        <td>
+                            <mat-form-field appearance="outline" style="width: 80px;">
+                                <input matInput [(ngModel)]="dialogData.data.items[i].quantity" (input)="updateTotal(product)" required>
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            &#8377; {{calculateTotal(product)}} /-
+                        </td>
+                        <td>
+                            <button mat-icon-button color="primary" (click)="delete(product)"><mat-icon>delete</mat-icon></button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-3 mt-4 p-3" style="box-shadow: var(--box-shadow); margin-left: 5px; margin-right: 5px;">
+        <div align="center">
+            <h6 class="text-danger mt-5">Grand Total: </h6>
+            <h2 class="text-primary mt-3">&#8377; {{calculateGrandTotal()}} /-</h2>
+            <button mat-raised-button color="warn" style="margin-top: 50px;">Checkout</button>
+        </div>
+    </div>
+</div>
+
