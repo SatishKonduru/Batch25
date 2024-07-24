@@ -4,6 +4,9 @@ import { AngularMaterialModule } from '../../angular-material/angular-material.m
 import { Observable } from 'rxjs';
 import { OrdersService } from './orders.service';
 import { FormsModule } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { TmplAstRecursiveVisitor } from '@angular/compiler';
+import { UpdateOrderStatusComponent } from '../update-order-status/update-order-status.component';
 
 
 
@@ -22,7 +25,7 @@ export class OrdersComponent implements OnInit{
   ordersService = inject(OrdersService)
   searchKey: any = ''
   filterData : any = []
-  
+  dialog = inject(MatDialog)
   ngOnInit(): void {
       this.getAllOrders()
   }
@@ -59,6 +62,20 @@ export class OrdersComponent implements OnInit{
     )
   }
 
-  
+  updateStatus(order: any){
+    const dialogConfig = new MatDialogConfig()
+    dialogConfig.data = {
+      orderData: order
+    }
+    dialogConfig.disableClose = true
+    dialogConfig.autoFocus = true
+    dialogConfig.width = '800px'
+    const dialogRef = this.dialog.open(UpdateOrderStatusComponent, dialogConfig)
+    dialogRef.componentInstance.onEmitStatus.subscribe({
+      next: (res: any) => 
+        this.getAllOrders()
+    })
+
+  }
 
 }

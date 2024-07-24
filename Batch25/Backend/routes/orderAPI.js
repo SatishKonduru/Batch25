@@ -69,5 +69,37 @@ router.get('/getAllOrders', authenticateToken, checkRole, async (req, res) => {
     }
 } )
 
+router.patch('/updateOrderStatus/:oId', authenticateToken, checkRole, async (req, res)=>{
+    const orderId = req.params.oId
+    const newStatus = req.body
+    try{
+        checkOrder = await Order.findOne({_id: orderId})
+        if(!checkOrder){
+            return res.status(404).send({
+                message: 'No Order found!'
+            })
+        }
+        updateOrder = await Order.findByIdAndUpdate(orderId, {status: newStatus.status})
+        if(updateOrder){
+            return res.status(200).send({
+                message: 'Order Status Updated Successfully.'
+            })
+        }
+        else{
+            res.status(401).send({
+                message: 'Order Statsu was not Updated.'
+            })
+        }
+    }
+    catch(error){
+        console.error('Error while updated the status of an Order:', error)
+        return res.status(500).send({
+            messge: 'Internal Server Error'
+        })
+    }
+})
+
+
+
 
 module.exports = router

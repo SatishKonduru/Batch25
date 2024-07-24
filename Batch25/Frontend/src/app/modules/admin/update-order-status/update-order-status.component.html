@@ -1,0 +1,35 @@
+<mat-toolbar color="warn" style="height: 50px;
+                                display: flex;
+                                justify-content: space-between;">
+<span>Update Status</span>
+<span mat-dialog-close><mat-icon>close</mat-icon></span>
+</mat-toolbar>
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-8" style="margin-right: 10px;">
+            <form [formGroup]="updateForm">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-label>Order Id</mat-label>
+                    <input matInput formControlName="orderId" readonly>
+                </mat-form-field>
+            </form>
+        </div>
+        <div class="col-3">
+            <form [formGroup]="updateForm">
+                <mat-form-field appearance="outline" style="width: 100%;">
+                    <mat-select formControlName="status" [value]="updateForm.status">
+                        <mat-option value="Pending"> Pending</mat-option>
+                        <mat-option value="Shipped"> Shipped</mat-option>
+                        <mat-option value="Delivered"> Delivered</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <mat-dialog-actions align="center">
+            <button mat-stroked-button color="warn" (click)="updateStatus()">Update</button>
+            <button mat-stroked-button mat-dialog-close="">close</button>
+        </mat-dialog-actions>
+    </div>
+</div>

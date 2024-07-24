@@ -50,7 +50,7 @@
                         <div style="height: 50px; width: 100px; border-radius: 7px;  text-align: center; padding-top: 10px; box-shadow: var(--box-shadow);">{{ order.status }}</div>
                         </td>
                     <td>
-                        <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button (click)="updateStatus(order)"><mat-icon>edit</mat-icon></button>
                       </td>
                   </tr>
                   

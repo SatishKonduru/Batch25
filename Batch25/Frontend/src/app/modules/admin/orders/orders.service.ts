@@ -16,4 +16,8 @@ export class OrdersService {
     return this._http.get<any>(`${this._url}/order/getAllOrders`).pipe(shareReplay())
   }
 
+  updateOrderStatus(orderId: any, newStatus: any): Observable<any>{
+    return this._http.patch(`${this._url}/order/updateOrderStatus/${orderId}`, {status: newStatus})
+  }
+
 }
